@@ -56,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void createmyDB(){
         SQLiteDBHelper sdh = new SQLiteDBHelper(getApplicationContext());
+        //must do this ,to produce the database file
+        SQLiteDatabase sdb = sdh.getWritableDatabase();
 
+        sdb.close();
         sdh.close();
     }
 }

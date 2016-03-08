@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+
+        <!-- 步骤1：创建一个item标签，确定该组件的状态-未按下 -->
+    <item android:state_pressed="false">
+        
+        <!--步骤1-1：创建一个sharp标签，设置组件的显示样式  -->
+        <shape>
+         <!-- 设置该组件为实心颜色填充 -->
+            <solid android:color="#84DDD9"/>
+            <!-- 设置组件的描边 -->
+            <stroke android:width="0.5dp" android:color="#DDDDDD" />
+
+        </shape>
+        
+    </item>
+    
+    <!-- 步骤2：创建一个item标签，确定该组件的状态-按下 -->
+    <item android:state_pressed="true">
+        
+         <!--步骤2-1：创建一个sharp标签，设置组件的显示样式  -->
+        <shape>
+         <!-- 设置该组件为实心颜色填充 -->
+            <solid android:color="#DDDDDD"/>
+            <!-- 设置组件的描边 -->
+            <stroke android:width="0.5dp" android:color="#CCCCCC" />
+
+        </shape>
+        
+    </item>
+
+</selector>

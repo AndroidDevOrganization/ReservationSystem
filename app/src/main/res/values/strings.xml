@@ -1,4 +1,42 @@
 <resources>
-    <string name="app_name">ReservationSystem</string>
+    <string name="app_name"> 预约系统</string>
     <string name="action_settings">Settings</string>
+    <string name="tips">请选择会议室</string>
+    <string name="agree">我已仔细阅读并同意服务协议</string>
+    <string name="save">保存</string>
+    <string name="back">返回</string>
+    <string name="logo">logo</string>
+    <string name="username">用户名/Username</string>
+    <string name="password">密码/Password</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="settings"> 设置</string>
+    <string name="personal">账号设置</string>
+    <string name="chanpwd">密码修改</string>
+    <string name="tiephone">手机绑定</string>
+    <string name="alarm">通知设置</string>
+    <string name="chancdt">预约状态变更</string>
+    <string name="cdtalarm">预约提醒</string>
+    <string name="dontbd">免打扰</string>
+    <string name="aboutus">关于我们</string>
+    <string name="bookdetail"> 预约信息</string>
+    <string name="roomname">会议室：</string>
+    <string name="place">地点：</string>
+    <string name="bookdate">预约日期：</string>
+    <string name="date">会议日期：</string>
+    <string name="sttime">开始时间：</string>
+    <string name="endtime">结束时间：</string>
+    <string name="manager">负责人：</string>
+    <string name="describe">描述：</string>
+    <string name="mybook"> 我的预约</string>
+    <string name="bookcdt">状态：</string>
+    <string name="people">与会人员：</string>
+    <string name="time">会议时间：</string>
+    <string name="cantchan">该处不可编辑</string>
+    <string name="mymark"> 我的收藏</string>
+    <string name="vector">容量：</string>
+    <string name="opentime">开放时间：</string>
+    <string name="homepage"> 首页</string>
+    <string name="chantheme"> 切换主题</string>
+
 </resources>
