@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +24,9 @@ import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
-//    ToggleButton toggleButton;
-//    Switch switcher;
+    // for test
+    ToggleButton toggleButton;
+    Switch switcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +34,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        // create SQLite DB
-        createmyDB();
 
         // for navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
@@ -54,28 +45,46 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        toggleButton = (ToggleButton) findViewById(R.id.toggle);
-//        switcher = (Switch) findViewById(R.id.switcher);
-//        final LinearLayout test = (LinearLayout) findViewById(R.id.test);
-//        OnCheckedChangeListener listener = new OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked) {
-//                    //设置LinearLayout垂直布局
-//                    test.setOrientation(LinearLayout.VERTICAL);
-//                    toggleButton.setChecked(true);
-//                    switcher.setChecked(true);
-//                }
-//                else {
-//                    //设置LinearLayout水平布局
-//                    test.setOrientation(LinearLayout.HORIZONTAL);
-//                    toggleButton.setChecked(false);
-//                    switcher.setChecked(false);
-//                }
-//            }
-//        };
-//        toggleButton.setOnCheckedChangeListener(listener);
-//        switcher.setOnCheckedChangeListener(listener);
+//        ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewpager);
+//        if (viewPager != null) {
+//            setupViewPager(viewPager);
+//        }
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        // create SQLite DB
+        createmyDB();
+
+        // for test
+        toggleButton = (ToggleButton) findViewById(R.id.toggle);
+        switcher = (Switch) findViewById(R.id.switcher);
+        final LinearLayout test = (LinearLayout) findViewById(R.id.test);
+        OnCheckedChangeListener listener = new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    //设置LinearLayout垂直布局
+                    test.setOrientation(LinearLayout.VERTICAL);
+                    toggleButton.setChecked(true);
+                    switcher.setChecked(true);
+                }
+                else {
+                    //设置LinearLayout水平布局
+                    test.setOrientation(LinearLayout.HORIZONTAL);
+                    toggleButton.setChecked(false);
+                    switcher.setChecked(false);
+                }
+            }
+        };
+        toggleButton.setOnCheckedChangeListener(listener);
+        switcher.setOnCheckedChangeListener(listener);
     }
 
     // function for goto back

@@ -14,7 +14,10 @@
     <string name="settings">设置</string>
     <string name="abouts">关于</string>
 
-    <!--bookdetail string-->
+    <!--itemlist string-->
+    <string name="confirm">认证</string>
+
+    <!--bookdetail string-->n
     <string name="action_settings">Settings</string>
     <string name="tips">请选择会议室</string>
     <string name="agree">我已仔细阅读并同意服务协议</string>
