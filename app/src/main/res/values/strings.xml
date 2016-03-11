@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="app_name">推荐系统</string>
+    <string name="app_name">预约系统</string>
     <string name="home">首页</string>
     <string name="myReservation">我的预约</string>
     <string name="collection">收藏</string>
