@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/home"
+            android:checkable="true"
+            android:checked="true"/>
+        <item android:id="@+id/nav_myReservation"
+            android:icon="@drawable/ic_book"
+            android:title="@string/myReservation"
+            android:checkable="true"/>
+        <item android:id="@+id/nav_collection"
+            android:icon="@drawable/ic_collect"
+            android:title="@string/collection"
+            android:checkable="true"/>
+    </group>
+
+    <item android:title="@string/system">
+        <menu>
+            <item android:id="@+id/nav_theme"
+                android:icon="@drawable/ic_theme"
+                android:title="@string/theme" />
+            <item android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/settings" />
+        </menu>
+    </item>
+
+</menu>
