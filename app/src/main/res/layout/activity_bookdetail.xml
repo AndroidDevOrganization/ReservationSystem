@@ -64,7 +64,7 @@
         android:stretchColumns="1"
         android:background="#FFFFFF"
         android:layout_marginBottom="10dp">
-        
+
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
