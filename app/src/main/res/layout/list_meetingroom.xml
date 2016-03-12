@@ -3,10 +3,10 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/item_margin"
-    android:background="@drawable/itemFrame">
+    android:background="@drawable/item_frame">
 
     <LinearLayout
-        android:layout_width="warp_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="4"
@@ -20,6 +20,7 @@
             android:layout_marginBottom="5dp">
 
             <TextView
+                android:id="@+id/room_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -28,6 +29,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"/>
             <TextView
+                android:id="@+id/room_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -42,6 +44,7 @@
                 android:textColor="@color/text_gray11"
                 android:textSize="16sp"/>
             <TextView
+                android:id="@+id/room_capacity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -50,7 +53,7 @@
                 android:textSize="16sp"/>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/layout_opentime"
+            android:id="@+id/layout_openTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -63,6 +66,7 @@
                 android:textStyle="bold"
                 android:textSize="15sp"/>
             <TextView
+                android:id="@+id/room_openTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="工作日，8:00-20:00"
@@ -72,6 +76,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/room_description"
             android:layout_width="match_parent"
             android:layout_height="@dimen/des_height"
             android:maxLines="2"
@@ -83,13 +88,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="warp_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
         <ImageView
+            android:id="@+id/room_authority"
             android:layout_width="@dimen/managerView_width"
             android:layout_height="@dimen/managerView_height"
             android:scaleType="centerCrop"
@@ -97,6 +103,7 @@
             android:layout_margin="@dimen/item_margin"
             android:src="@drawable/manager_head" />
         <TextView
+            android:id="@+id/room_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/confirm"
