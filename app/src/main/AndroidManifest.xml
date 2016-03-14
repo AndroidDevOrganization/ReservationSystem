@@ -19,16 +19,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".bookDetailActivity"
-            android:parentActivityName=".MainActivity"
             android:label="@string/app_bookDetail"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+            <!--<meta-data android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value=".MainActivity" />-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".MyReservationActivity"
+            android:label="@string/app_myReservation"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
     </application>
 

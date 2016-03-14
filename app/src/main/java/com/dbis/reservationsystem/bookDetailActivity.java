@@ -3,7 +3,7 @@ package com.dbis.reservationsystem;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -87,6 +87,15 @@ public class bookDetailActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"预约成功~" , Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     class RoomNameItemSelectedListener implements AdapterView.OnItemSelectedListener
