@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,14 +20,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.dbis.reservationsystem.Entity.MeetingRoom;
@@ -46,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // create SQLite DB
@@ -59,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setAdapter(new MeetingRoomRecyclerViewAdapter(this, mrlist));
 
         // for navigation
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -77,35 +70,12 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // for test
-//        toggleButton = (ToggleButton) findViewById(R.id.toggle);
-//        switcher = (Switch) findViewById(R.id.switcher);
-//        final LinearLayout test = (LinearLayout) findViewById(R.id.test);
-//        OnCheckedChangeListener listener = new OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked) {
-//                    //设置LinearLayout垂直布局
-//                    test.setOrientation(LinearLayout.VERTICAL);
-//                    toggleButton.setChecked(true);
-//                    switcher.setChecked(true);
-//                }
-//                else {
-//                    //设置LinearLayout水平布局
-//                    test.setOrientation(LinearLayout.HORIZONTAL);
-//                    toggleButton.setChecked(false);
-//                    switcher.setChecked(false);
-//                }
-//            }
-//        };
-//        toggleButton.setOnCheckedChangeListener(listener);
-//        switcher.setOnCheckedChangeListener(listener);
     }
 
     // function for goto back
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -200,7 +170,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Intent intent = new Intent(context, bookdetailActivity.class);
+                    Intent intent = new Intent(context, bookDetailActivity.class);
                     //intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
 
                     context.startActivity(intent);
@@ -247,7 +217,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

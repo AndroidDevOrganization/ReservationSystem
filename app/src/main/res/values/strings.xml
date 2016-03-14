@@ -1,6 +1,7 @@
 <resources>
     <!--app string-->
     <string name="app_name">预约系统</string>
+    <string name="app_bookDetail">预约信息</string>
 
     <!--navigation string-->
     <string name="navigation_drawer_open">Open navigation drawer</string>

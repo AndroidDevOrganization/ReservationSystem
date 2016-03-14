@@ -2,6 +2,8 @@ package com.dbis.reservationsystem;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 //to fill the adaptor, need String[]
-public class bookdetailActivity extends AppCompatActivity {
+public class bookDetailActivity extends AppCompatActivity {
     private Spinner spnRoomName;
     private TextView tvRoomLocation;
     private EditText etSupervisor;
@@ -38,7 +40,11 @@ public class bookdetailActivity extends AppCompatActivity {
         int nameNum;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bookdetail);
+        setContentView(R.layout.activity_book_detail);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.dbManager = new DBManager(this);
         this.spnRoomName = (Spinner)findViewById(R.id.spSex);
@@ -58,10 +64,10 @@ public class bookdetailActivity extends AppCompatActivity {
             namesToFill[i] = roomNames.get(i);
         spnAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item,namesToFill);
-// define the mode by ourselves
+        // define the mode by ourselves
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnRoomName.setAdapter(spnAdapter);
-        //bind the listener
+        // bind the listener
         spnRoomName.setOnItemSelectedListener(new RoomNameItemSelectedListener());
 
         ivSave.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +88,6 @@ public class bookdetailActivity extends AppCompatActivity {
             }
         });
     }
-
 
     class RoomNameItemSelectedListener implements AdapterView.OnItemSelectedListener
     {

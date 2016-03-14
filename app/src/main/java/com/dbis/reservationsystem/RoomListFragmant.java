@@ -115,7 +115,7 @@ public class RoomListFragmant extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Intent intent = new Intent(context, bookdetailActivity.class);
+                    Intent intent = new Intent(context, bookDetailActivity.class);
                     //intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
 
                     context.startActivity(intent);
