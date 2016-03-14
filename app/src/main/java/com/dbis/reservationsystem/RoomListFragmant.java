@@ -16,33 +16,41 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dbis.reservationsystem.Entity.MeetingRoom;
+import com.dbis.reservationsystem.sqlite.DBManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by shi12 on 2016/3/12.
  */
 public class RoomListFragmant extends Fragment {
+    List<MeetingRoom> mrlist = new ArrayList<MeetingRoom>();
+    DBManager dbManager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = (RecyclerView) inflater.inflate(R.layout.fragment_room_list, container, false);
+
+        RecyclerView rv = (RecyclerView) inflater.inflate(R.layout.recycler_view, container, false);
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+
+        this.dbManager = new DBManager(rv.getContext());
+        this.mrlist = this.dbManager.getMeetingRoomList();
+
         rv.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                getRandomSublist()));
+                this.mrlist));
+        return rv;
     }
 
-    private List<String> getRandomSublist(String[] array, int amount) {
-        ArrayList<String> list = new ArrayList<>(amount);
-        Random random = new Random();
-        while (list.size() < amount) {
-            list.add(array[random.nextInt(array.length)]);
-        }
-        return list;
-    }
+//    private List<MeetingRoom> getRandomSublist(String[] array, int amount) {
+//        ArrayList<MeetingRoom> list = new ArrayList<>(amount);
+//        Random random = new Random();
+//        while (list.size() < amount) {
+//            list.add(array[random.nextInt(array.length)]);
+//        }
+//        return list;
+//    }
 
     public static class SimpleStringRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleStringRecyclerViewAdapter.ViewHolder> {
@@ -84,7 +92,7 @@ public class RoomListFragmant extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_meetingroom, parent, false);
+                    .inflate(R.layout.room_item, parent, false);
             view.setBackgroundResource(mBackground);
             return new ViewHolder(view);
         }
@@ -96,7 +104,7 @@ public class RoomListFragmant extends Fragment {
             holder.mName.setText(tmpRoomItem.getRoomName());
             holder.mLocation.setText(tmpRoomItem.getLocation());
             holder.mCapacity.setText(tmpRoomItem.getCapacity());
-            holder.mOpentime.setText(tmpRoomItem.getBeginTime() + " - " + tmpRoomItem.getEndTime());
+            holder.mOpentime.setText("每天，" + tmpRoomItem.getBeginTime() + ":00 - " + tmpRoomItem.getEndTime() + ":00");
             holder.mDescription.setText(tmpRoomItem.getDescription());
             if(tmpRoomItem.isNeedConfirm())
                 holder.mConfirm.setVisibility(View.VISIBLE);
@@ -115,9 +123,9 @@ public class RoomListFragmant extends Fragment {
             });
 
             Glide.with(holder.mAuthority.getContext())
-                    .load(Cheeses.getRandomCheeseDrawable())
+                    .load(MeetingRoom.getRandomRoomDrawable())
                     .fitCenter()
-                    .into(holder.mImageView);
+                    .into(holder.mAuthority);
         }
 
         @Override

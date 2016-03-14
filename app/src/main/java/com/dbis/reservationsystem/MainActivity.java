@@ -1,5 +1,7 @@
 package com.dbis.reservationsystem;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,23 +12,35 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.bumptech.glide.Glide;
+import com.dbis.reservationsystem.Entity.MeetingRoom;
+import com.dbis.reservationsystem.sqlite.DBManager;
 import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
-    // for test
-    ToggleButton toggleButton;
-    Switch switcher;
+    private RecyclerView mRecyclerView;
+    private List<MeetingRoom> mrlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +48,15 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+
+        // create SQLite DB
+        createmyDB();
+        mrlist = new DBManager(this).getMeetingRoomList();
+
+        // for recyclerView of room list
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(new MeetingRoomRecyclerViewAdapter(this, mrlist));
 
         // for navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
@@ -45,11 +68,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewpager);
-//        if (viewPager != null) {
-//            setupViewPager(viewPager);
-//        }
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,32 +77,29 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // create SQLite DB
-        createmyDB();
-
         // for test
-        toggleButton = (ToggleButton) findViewById(R.id.toggle);
-        switcher = (Switch) findViewById(R.id.switcher);
-        final LinearLayout test = (LinearLayout) findViewById(R.id.test);
-        OnCheckedChangeListener listener = new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    //设置LinearLayout垂直布局
-                    test.setOrientation(LinearLayout.VERTICAL);
-                    toggleButton.setChecked(true);
-                    switcher.setChecked(true);
-                }
-                else {
-                    //设置LinearLayout水平布局
-                    test.setOrientation(LinearLayout.HORIZONTAL);
-                    toggleButton.setChecked(false);
-                    switcher.setChecked(false);
-                }
-            }
-        };
-        toggleButton.setOnCheckedChangeListener(listener);
-        switcher.setOnCheckedChangeListener(listener);
+//        toggleButton = (ToggleButton) findViewById(R.id.toggle);
+//        switcher = (Switch) findViewById(R.id.switcher);
+//        final LinearLayout test = (LinearLayout) findViewById(R.id.test);
+//        OnCheckedChangeListener listener = new OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked) {
+//                    //设置LinearLayout垂直布局
+//                    test.setOrientation(LinearLayout.VERTICAL);
+//                    toggleButton.setChecked(true);
+//                    switcher.setChecked(true);
+//                }
+//                else {
+//                    //设置LinearLayout水平布局
+//                    test.setOrientation(LinearLayout.HORIZONTAL);
+//                    toggleButton.setChecked(false);
+//                    switcher.setChecked(false);
+//                }
+//            }
+//        };
+//        toggleButton.setOnCheckedChangeListener(listener);
+//        switcher.setOnCheckedChangeListener(listener);
     }
 
     // function for goto back
@@ -120,6 +135,88 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class MeetingRoomRecyclerViewAdapter
+            extends RecyclerView.Adapter<MeetingRoomRecyclerViewAdapter.ViewHolder> {
+
+        private TypedValue mTypedValue = new TypedValue();
+        //private int mBackground;            // color of background
+        private List<MeetingRoom> mValues;  // list of item details
+
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+            //public String mBoundString;
+
+            public final View mView;
+            public final ImageView mAuthority;
+            public final TextView mName, mLocation, mCapacity, mOpentime, mDescription, mConfirm;
+
+            public ViewHolder(View view) {
+                super(view);
+                mView = view;
+                mName = (TextView) view.findViewById(R.id.room_name);
+                mLocation = (TextView) view.findViewById(R.id.room_location);
+                mCapacity = (TextView) view.findViewById(R.id.room_capacity);
+                mOpentime = (TextView) view.findViewById(R.id.room_openTime);
+                mDescription = (TextView) view.findViewById(R.id.room_description);
+                mAuthority = (ImageView) view.findViewById(R.id.room_authority);
+                mConfirm = (TextView) view.findViewById(R.id.room_confirm);
+            }
+        }
+
+        public MeetingRoom getValueAt(int position) {
+            return mValues.get(position);
+        }
+
+        public MeetingRoomRecyclerViewAdapter(Context context, List<MeetingRoom> items) {
+            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
+            //mBackground = mTypedValue.resourceId;
+            mValues = items;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.room_item, parent, false);
+            //view.setBackgroundResource(mBackground);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+            //holder.mBoundString = mValues.get(position);
+            MeetingRoom tmpRoomItem = mValues.get(position);
+            holder.mName.setText(tmpRoomItem.getRoomName());
+            holder.mLocation.setText(tmpRoomItem.getLocation());
+            holder.mCapacity.setText(tmpRoomItem.getCapacity()+"");
+            holder.mOpentime.setText("每天，" + tmpRoomItem.getBeginTime() + ":00 - " + tmpRoomItem.getEndTime() + ":00");
+            holder.mDescription.setText(tmpRoomItem.getDescription());
+            if(tmpRoomItem.isNeedConfirm())
+                holder.mConfirm.setVisibility(View.VISIBLE);
+            else
+                holder.mConfirm.setVisibility(View.INVISIBLE);
+
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, bookdetailActivity.class);
+                    //intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
+
+                    context.startActivity(intent);
+                }
+            });
+
+            Glide.with(holder.mAuthority.getContext())
+                    .load(MeetingRoom.getRandomRoomDrawable())
+                    .fitCenter()
+                    .into(holder.mAuthority);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mValues.size();
+        }
     }
 
     // create SQLite DB

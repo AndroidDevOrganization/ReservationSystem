@@ -1,6 +1,7 @@
 package com.dbis.reservationsystem.Entity;
 
-import java.util.Date;
+import com.dbis.reservationsystem.R;
+
 import java.util.Random;
 
 /**
@@ -10,21 +11,33 @@ public class MeetingRoom {
     private String roomName;
     private int capacity;
     private boolean isNeedConfirm;
-    private Date beginTime;
-    private Date endTime;
+    private int beginTime;
+    private int endTime;
     private String description;
     private String location;
-    private String authority;
+    private int authorityId;
+    //private String authority;
 
     public static int getRandomRoomDrawable() {
         Random rand = new Random();
-        switch (rand.nextInt(5)) {
+        switch (rand.nextInt(6)) {
+            default:
             case 0:
-                return
+                return R.drawable.auth_head_1;
+            case 1:
+                return R.drawable.auth_head_2;
+            case 2:
+                return R.drawable.auth_head_3;
+            case 3:
+                return R.drawable.auth_head_4;
+            case 4:
+                return R.drawable.auth_head_5;
+            case 5:
+                return R.drawable.auth_head_6;
         }
     }
 
-    public MeetingRoom(String roomName, int capacity, boolean isNeedConfirm, Date beginTime, Date endTime, String description, String location) {
+    public MeetingRoom(String roomName, int capacity, boolean isNeedConfirm, int beginTime, int endTime, String description, String location) {
         this.roomName = roomName;
         this.capacity = capacity;
         this.isNeedConfirm = isNeedConfirm;
@@ -34,7 +47,7 @@ public class MeetingRoom {
         this.location = location;
     }
 
-    public MeetingRoom(String roomName, int capacity, boolean isNeedConfirm, Date beginTime, Date endTime, String description, String location, String authority) {
+    public MeetingRoom(String roomName, int capacity, boolean isNeedConfirm, int beginTime, int endTime, String description, String location, int authorityId) {
         this.roomName = roomName;
         this.capacity = capacity;
         this.isNeedConfirm = isNeedConfirm;
@@ -42,7 +55,7 @@ public class MeetingRoom {
         this.endTime = endTime;
         this.description = description;
         this.location = location;
-        this.authority = authority;
+        this.authorityId = authorityId;
     }
 
     public String getRoomName() {
@@ -69,19 +82,19 @@ public class MeetingRoom {
         this.isNeedConfirm = isNeedConfirm;
     }
 
-    public Date getBeginTime() {
+    public int getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Date beginTime) {
+    public void setBeginTime(int beginTime) {
         this.beginTime = beginTime;
     }
 
-    public Date getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
@@ -92,13 +105,22 @@ public class MeetingRoom {
     public void setDescription(String description) {
         this.description = description;
     }
-
+/*
     public String getAuthority() {
         return authority;
     }
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+*/
+
+    public int getAuthorityId() {
+        return authorityId;
+    }
+
+    public void setAuthorityId(int authorityId) {
+        this.authorityId = authorityId;
     }
 
     public String getLocation() {

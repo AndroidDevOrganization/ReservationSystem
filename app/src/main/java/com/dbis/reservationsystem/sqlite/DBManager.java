@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.dbis.reservationsystem.Entity.MeetingRoom;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +52,33 @@ public class DBManager {
         // do not to have ' ' outside the ?
         String sql = "insert into reserveRecord(roomname,username,useBegin,useEnd,state ,description ,reservetime) " +
                 "values(?,?,? ,? ,? ,? ,?)";
-        db.execSQL(sql ,new Object[]{roomName, username ,useBegin ,useEnd ,state ,description ,reservetime});
+        db.execSQL(sql, new Object[]{roomName, username, useBegin, useEnd, state, description, reservetime});
         db.close();
+    }
+
+    public List<MeetingRoom> getMeetingRoomList() {
+        db = helper.getReadableDatabase();
+        List<MeetingRoom> mrlist = new ArrayList<MeetingRoom>();
+        Cursor c = db.rawQuery("select * from meetingRoomInfo", null);
+        while(c.moveToNext()) {
+            String room_name = c.getString(1);
+            String room_location = c.getString(2);
+            int capacity = c.getInt(3);
+            int authority_id = c.getInt(4);
+            int begin_time = c.getInt(5);
+            int end_time = c.getInt(6);
+            String description = c.getString(7);
+            if(description == null || description.equals(""))
+                description = "（暂无）";
+            int confirm = c.getInt(8);
+            boolean isNeedConfirm = (c.getInt(8)!=0);
+            MeetingRoom mr = new MeetingRoom(room_name, capacity, isNeedConfirm, begin_time, end_time, description, room_location, authority_id);
+            mrlist.add(mr);
+        }
+        for(int i = 0; i < 4; i++)
+            mrlist.add(mrlist.get(i));
+        c.close();
+        db.close();
+        return mrlist;
     }
 }
