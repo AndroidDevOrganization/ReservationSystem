@@ -115,7 +115,8 @@ public class MainActivity extends AppCompatActivity
         private List<MeetingRoom> mValues;  // list of item details
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
-            //public String mBoundString;
+            // define bundle to transfer between two activities.
+            public Bundle mBundle = new Bundle();
 
             public final View mView;
             public final ImageView mAuthority;
@@ -154,7 +155,6 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            //holder.mBoundString = mValues.get(position);
             MeetingRoom tmpRoomItem = mValues.get(position);
             holder.mName.setText(tmpRoomItem.getRoomName());
             holder.mLocation.setText(tmpRoomItem.getLocation());
@@ -166,12 +166,16 @@ public class MainActivity extends AppCompatActivity
             else
                 holder.mConfirm.setVisibility(View.INVISIBLE);
 
+            // put parameters to transfer
+            holder.mBundle.putString("room_name", tmpRoomItem.getRoomName());
+            holder.mBundle.putString("location", tmpRoomItem.getLocation());
+
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, BookDetailActivity.class);
-                    //intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
+                    intent.putExtras(holder.mBundle);
 
                     context.startActivity(intent);
                 }
