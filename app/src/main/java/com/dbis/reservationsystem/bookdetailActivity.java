@@ -96,8 +96,13 @@ public class bookdetailActivity extends Activity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar c = Calendar.getInstance();
                         c.set(year,monthOfYear,dayOfMonth);
-                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                        etMeetingDate.setText(df.format(c.getTime()));
+                        SimpleDateFormat dfChosen = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat dfNow = new SimpleDateFormat("yyyy-MM-dd");
+                        //compare if the chose date is earlier than now
+                        if(dfChosen.format(c.getTime()).compareTo(dfNow.format(new Date())) <0)
+                            Toast.makeText(getApplicationContext(),"无法预约该天，请重新选择日期~" , Toast.LENGTH_LONG).show();
+                        else
+                        etMeetingDate.setText(dfChosen.format(c.getTime()));
                     }
                 },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
