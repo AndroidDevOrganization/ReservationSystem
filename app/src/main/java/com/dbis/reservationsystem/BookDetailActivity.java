@@ -4,6 +4,10 @@ import android.app.Activity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import android.view.Window;
@@ -25,7 +29,9 @@ import java.util.Date;
 import java.util.List;
 
 //to fill the adaptor, need String[]
-public class bookdetailActivity extends Activity {
+
+public class BookDetailActivity extends AppCompatActivity {
+
     private Spinner spnRoomName;
     private Spinner spnBeginTime;
     private Spinner spnEndTime;
@@ -49,9 +55,15 @@ public class bookdetailActivity extends Activity {
         String endTime[] = {"09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"};
 
         super.onCreate(savedInstanceState);
-        // set the system own bar free
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_bookdetail);
+
+        setContentView(R.layout.activity_book_detail);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+// Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
+        toolbar.setOnMenuItemClickListener(onMenuItemClick);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.dbManager = new DBManager(this);
         this.spnRoomName = (Spinner)findViewById(R.id.spSex);
@@ -61,7 +73,6 @@ public class bookdetailActivity extends Activity {
         this.spnBeginTime = (Spinner) findViewById(R.id.spBeginTime);
         this.spnEndTime = (Spinner) findViewById(R.id.spEndTime);
         this.etDescription = (EditText) findViewById(R.id.etDescription);
-        this.ivSave = (ImageView) findViewById(R.id.ivSave);
 
         roomNames = dbManager.getAllRoomName();
         nameNum = roomNames.size();
@@ -71,10 +82,10 @@ public class bookdetailActivity extends Activity {
             namesToFill[i] = roomNames.get(i);
         spnAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item,namesToFill);
-// define the mode by ourselves
+        // define the mode by ourselves
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnRoomName.setAdapter(spnAdapter);
-        //bind the listener
+        // bind the listener
         spnRoomName.setOnItemSelectedListener(new RoomNameItemSelectedListener());
         //adjust the style for startTime
         spnstartTimeAdapter = new ArrayAdapter<String>(this,
@@ -91,7 +102,7 @@ public class bookdetailActivity extends Activity {
         etMeetingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog dialog = new DatePickerDialog(bookdetailActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dialog = new DatePickerDialog(BookDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar c = Calendar.getInstance();
@@ -108,27 +119,17 @@ public class bookdetailActivity extends Activity {
                 dialog.show();
             }
         });
-
-
-        ivSave.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                String rDate = etMeetingDate.getText().toString();
-                String username = etSupervisor.getText().toString();
-                String useBegin = rDate + " " + spnBeginTime.getSelectedItem().toString()+":00";
-                String useEnd = rDate + " " + spnEndTime.getSelectedItem().toString()+":00";
-                String state = "1";
-                String description  = etDescription.getText().toString();
-                //to get the now date
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                String reserveTime = df.format(new Date());// new Date()为获取当前系统时间
-                dbManager.insertIntoRecord(roomNameNow , username ,useBegin ,useEnd ,state ,description ,reserveTime);
-                Toast.makeText(getApplicationContext(),"预约成功~" , Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     class RoomNameItemSelectedListener implements AdapterView.OnItemSelectedListener
     {
@@ -147,4 +148,33 @@ public class bookdetailActivity extends Activity {
 
         }
     }
+    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.Save:
+                    String rDate = etMeetingDate.getText().toString();
+                    String username = etSupervisor.getText().toString();
+                    String useBegin = rDate + " " + spnBeginTime.getSelectedItem().toString()+":00";
+                    String useEnd = rDate + " " + spnEndTime.getSelectedItem().toString()+":00";
+                    String state = "1";
+                    String description  = etDescription.getText().toString();
+                    //to get the now date
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                    String reserveTime = df.format(new Date());// new Date()为获取当前系统时间
+                    dbManager.insertIntoRecord(roomNameNow , username ,useBegin ,useEnd ,state ,description ,reserveTime);
+                    Toast.makeText(getApplicationContext(),"预约成功~" , Toast.LENGTH_LONG).show();
+                    break;
+
+            }
+
+            return true;
+        }
+    };
+    //must need this function to inflate menu . Called immediately when created.
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bookdetail, menu);
+        return true;
+    }
+
 }

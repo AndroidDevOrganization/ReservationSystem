@@ -27,13 +27,13 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 		arg0.execSQL("create table reserveRecord(id integer primary key autoincrement,roomname text(30),username text(30),useBegin text(30),useEnd text(30) ,state text(30)," +
 				"description text(50),reservetime text(30)) ");
 		arg0.execSQL("insert into meetingRoomInfo(roomname,roomlocation,capacity,authority,beginTime ,endTime ,description,needauthentication) " +
-				"values('会议室553','信息东楼',40 ,1 ,1 ,24 ,'',0)");
+				"values('会议室553','信息东楼',40 ,1 ,1 ,24 ,'会议室音像设备齐全，房间宽敞明亮，干净整洁，足够进行大型会议，讲座等使用。总之，一句话棒棒哒哒哒哒哒哒',0)");
 		arg0.execSQL("insert into meetingRoomInfo(roomname,roomlocation,capacity,authority,beginTime ,endTime ,description,needauthentication) " +
-				"values('会议室448','信息东楼',12 ,1 ,1 ,24 ,'',0)");
+				"values('会议室448','信息东楼',12 ,1 ,1 ,24 ,'',1)");
 		arg0.execSQL("insert into meetingRoomInfo(roomname,roomlocation,capacity,authority,beginTime ,endTime ,description,needauthentication) " +
 				"values('会议室523','信息东楼',70 ,1 ,1 ,24 ,'',0)");
 		arg0.execSQL("insert into meetingRoomInfo(roomname,roomlocation,capacity,authority,beginTime ,endTime ,description,needauthentication) " +
-				"values('会议室545','信息东楼',40 ,1 ,1 ,24 ,'',0)");
+				"values('会议室545','信息东楼',40 ,1 ,1 ,24 ,'会议室干净整体，宽敞明亮，适合小型会议及各种例会。',1)");
 		arg0.execSQL("insert into reserveRecord(roomname,username,useBegin,useEnd,state ,description ,reservetime) " +
 				"values('会议室553','大鹏哥','2015-11-21 08:00:00' ,'2015-11-21 15:00:00' ,'1' ,'周二例会' ,'2015-11-20 15:55:01')");
 		arg0.execSQL("insert into reserveRecord(roomname,username,useBegin,useEnd,state ,description ,reservetime) " +
