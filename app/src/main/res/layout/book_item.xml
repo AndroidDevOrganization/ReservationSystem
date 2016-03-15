@@ -1,147 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/item_padding"
+    android:layout_marginLeft="@dimen/item_margin"
+    android:layout_marginRight="@dimen/item_margin"
+    android:layout_marginBottom="@dimen/item_padding"
+    android:padding="0dp"
+    android:background="@drawable/item_frame">
 
-    <ListView
-        android:id="@id/android:list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/bookitem"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:padding="@dimen/item_padding"
+        android:background="?attr/selectableItemBackground">
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:collapseColumns="4">
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:padding="@dimen/item_padding">
 
-
-            <TableRow
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/bookdate"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="20160303"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/booking_date" />
 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_gray11"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="时间:"/>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/bookcdt"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"/>
+                    android:id="@+id/myres_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textColor="@color/text_dimgray"
+                    android:textSize="15sp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="已预约"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/booking_state" />
-            </TableRow>
-            <TableRow
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/room_authority"
+                        android:layout_width="@dimen/managerView_width"
+                        android:layout_height="@dimen/managerView_height"
+                        android:layout_margin="@dimen/item_margin" />
+                    <TextView
+                        android:id="@+id/myres_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="已审核"
+                        android:padding="2dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_Coral"
+                        android:background="@drawable/txt_confirm"
+                        android:layout_gravity="center_horizontal"/>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_openTime"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/item_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="会议地点:"
+                    android:textColor="@color/text_gray21"
+                    android:textStyle="bold"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/myres_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textColor="@color/text_gray11"
+                    android:textStyle="bold"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="负责人:"
+                    android:textColor="@color/text_gray21"
+                    android:textStyle="bold"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/myres_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textColor="@color/text_gray11"
+                    android:textStyle="bold"
+                    android:textSize="15sp"/>
+            </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/roomname"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="主楼小礼堂"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/booking_address" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/manager"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="张莹"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/director" />
-            </TableRow>
-            <TableRow
+            <TextView
+                android:id="@+id/myres_description"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="@dimen/des_height"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="15sp"
+                android:textColor="#555555"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/date"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="20160304"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/meeting_date" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/time"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="下午3点-5点"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/meeting_time" />
-            </TableRow>
+        </LinearLayout>
 
-        </TableLayout>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:collapseColumns="2"
-            android:stretchColumns="1">
-
-            <TableRow>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/describe"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="灯光亮起来音乐响起来！！！"
-                    android:textSize="15sp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/description" />
-            </TableRow>
-
-        </TableLayout>
 
     </LinearLayout>
 

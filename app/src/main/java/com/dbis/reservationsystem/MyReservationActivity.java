@@ -1,96 +1,87 @@
 package com.dbis.reservationsystem;
 
-import android.app.ListActivity;
-import android.content.Intent;
-import android.os.Bundle;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
+import com.dbis.reservationsystem.Entity.MeetingRoom;
+import com.dbis.reservationsystem.Entity.MyReservation;
+import com.dbis.reservationsystem.sqlite.DBManager;
+import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class MyReservationActivity extends ListActivity {
+public class MyReservationActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
+    private RecyclerView mRecyclerView;
+    private List<MyReservation> mrlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_item);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
-        SimpleAdapter adapter=new SimpleAdapter(this,getData(),R.layout.book_item,new String[]{"booking_date","booking_state","booking_address","director","meeting_date","meeting_time","description"},new int[]{R.id.booking_date,R.id.booking_state,R.id.booking_address,R.id.director,R.id.meeting_date,R.id.meeting_time,R.id.description});
-        setListAdapter(adapter);
-        ListView lv=getListView();
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // create SQLite DB
+        createmyDB();
+        mrlist = new DBManager(this).getMyReservationList();
+
+        // for recyclerView of room list
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(new MyReservationRecyclerViewAdapter(this, mrlist));
+
+        // for navigation
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                TextView tv= (TextView) view.findViewById(R.id.booking_date);
-//                Toast.makeText(getApplicationContext(),tv.getText(),Toast.LENGTH_SHORT).show();
-                //新建一个显式意图，第一个参数为当前Activity类对象，第二个参数为你要打开的Activity类
-                Intent intent =new Intent(MyReservationActivity.this, BookDetailActivity.class);
-
-                //用Bundle携带数据
-                Bundle bundle=new Bundle();
-                //传递参数
-                TextView tv1=(TextView)view.findViewById(R.id.booking_address);
-                TextView tv2=(TextView)view.findViewById(R.id.director);
-                TextView tv3=(TextView)view.findViewById(R.id.meeting_date);
-                TextView tv4=(TextView)view.findViewById(R.id.meeting_time);
-                TextView tv5=(TextView)view.findViewById(R.id.description);
-                bundle.putString("booking_address", (String) tv1.getText());
-                bundle.putString("director", (String) tv2.getText());
-                bundle.putString("meeting_date", (String) tv3.getText());
-                bundle.putString("meeting_time", (String) tv4.getText());
-                bundle.putString("description", (String) tv5.getText());
-                intent.putExtras(bundle);
-
-                startActivity(intent);
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
+
     }
 
-    public List<Map<String,Object>> getData()
-    {
-        Map<String,Object> value =new HashMap<String,Object>();
-        List<Map<String,Object>> lm =new ArrayList<Map<String,Object>>();
-        value.put("booking_date","20160303");
-        value.put("booking_state","已预约");
-        value.put("booking_address","主楼小礼堂");
-        value.put("director","张莹");
-        value.put("meeting_date","20160303");
-        value.put("meeting_time","下午3点-5点");
-        value.put("description", "灯光亮起来音乐响起来！！！");
-        lm.add(value);
-
-        value =new HashMap();
-        value.put("booking_date","20160304");
-        value.put("booking_state","已预约");
-        value.put("booking_address","二主");
-        value.put("director","张莹");
-        value.put("meeting_date","20160304");
-        value.put("meeting_time","下午2点-5点");
-        value.put("description","灯光亮起来音乐响起来！！！");
-        lm.add(value);
-
-        value =new HashMap();
-        value.put("booking_date","20160305");
-        value.put("booking_state","已预约");
-        value.put("booking_address","计控楼");
-        value.put("director","张莹");
-        value.put("meeting_date","20160305");
-        value.put("meeting_time","下午3点-4点");
-        value.put("description","灯光亮起来音乐响起来！！！");
-        lm.add(value);
-
-        return  lm;
+    // function for goto back
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -110,8 +101,139 @@ public class MyReservationActivity extends ListActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.settings) {
             return true;
+        } else if (id == R.id.abouts) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class MyReservationRecyclerViewAdapter
+            extends RecyclerView.Adapter<MyReservationRecyclerViewAdapter.ViewHolder> {
+
+        private TypedValue mTypedValue = new TypedValue();
+        //private int mBackground;            // color of background
+        private List<MyReservation> mValues;  // list of item details
+
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+            // define bundle to transfer between two activities.
+            public Bundle mBundle = new Bundle();
+
+            public final View mView;
+
+            public final TextView myres_time, myres_address, myres_username, myres_description,myres_state;
+
+            public ViewHolder(View view) {
+                super(view);
+                mView = view;
+                myres_time = (TextView) view.findViewById(R.id.myres_time);
+                myres_address = (TextView) view.findViewById(R.id.myres_address);
+                myres_username = (TextView) view.findViewById(R.id.myres_username);
+                myres_description = (TextView) view.findViewById(R.id.myres_description);
+                myres_state = (TextView) view.findViewById(R.id.myres_state);
+
+            }
+        }
+
+        public MyReservation getValueAt(int position) {
+            return mValues.get(position);
+        }
+
+        public MyReservationRecyclerViewAdapter(Context context, List<MyReservation> items) {
+            context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
+            //mBackground = mTypedValue.resourceId;
+            mValues = items;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.book_item, parent, false);
+            //view.setBackgroundResource(mBackground);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+            MyReservation tmpMyResItem = mValues.get(position);
+            holder.myres_time.setText(tmpMyResItem.getUseBegin());
+            holder.myres_username.setText(tmpMyResItem.getUsername());
+            holder.myres_address.setText(tmpMyResItem.getRoomname());
+            holder.myres_description.setText(tmpMyResItem.getDescription());
+            holder.myres_state.setVisibility(View.VISIBLE);
+
+
+
+
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, BookDetailActivity.class);
+                    intent.putExtras(holder.mBundle);
+
+                    context.startActivity(intent);
+                }
+            });
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return mValues.size();
+        }
+    }
+
+    // create SQLite DB
+    public void createmyDB() {
+        SQLiteDBHelper sdh = new SQLiteDBHelper(getApplicationContext());
+        //must do this ,to produce the database file
+        SQLiteDatabase sdb = sdh.getWritableDatabase();
+
+        sdb.close();
+        sdh.close();
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+//            if (this != MainActivity.this) {
+                Intent intent = new Intent(this, MainActivity.class);
+                this.startActivity(intent);
+//            }
+        } else if (id == R.id.nav_myReservation) {
+            if (this != MyReservationActivity.this) {
+            Intent intent = new Intent(this, MyReservationActivity.class);
+            this.startActivity(intent);
+            }
+        } else if (id == R.id.nav_collection) {
+
+        } else if (id == R.id.nav_theme) {
+
+        } else if (id == R.id.nav_settings) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void userHandler(View source) {
+
+    }
+
+    public void logout(View source) {
+
+    }
+
+    public void clickBt1(View source) {
+        Intent mainToBook =new Intent(MyReservationActivity.this,BookDetailActivity.class);
+        startActivity(mainToBook);
     }
 }

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.dbis.reservationsystem.Entity.MeetingRoom;
+import com.dbis.reservationsystem.Entity.MyReservation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,29 @@ public class DBManager {
             int confirm = c.getInt(8);
             boolean isNeedConfirm = (c.getInt(8)!=0);
             MeetingRoom mr = new MeetingRoom(room_name, capacity, isNeedConfirm, begin_time, end_time, description, room_location, authority_id);
+            mrlist.add(mr);
+        }
+        for(int i = 0; i < 4; i++)
+            mrlist.add(mrlist.get(i));
+        c.close();
+        db.close();
+        return mrlist;
+    }
+    public List<MyReservation> getMyReservationList() {
+        db = helper.getReadableDatabase();
+        List<MyReservation> mrlist = new ArrayList<MyReservation>();
+        Cursor c = db.rawQuery("select roomname,username,useBegin,state,description from reserveRecord", null);
+        while(c.moveToNext()) {
+            String roomname = c.getString(0);
+            String username = c.getString(1);
+            String useBegin = c.getString(2);
+            String state = c.getString(3);
+            String description = c.getString(4);
+            if(description == null || description.equals(""))
+                description = "（暂无）";
+
+
+            MyReservation mr = new MyReservation(roomname, username,useBegin, state, description);
             mrlist.add(mr);
         }
         for(int i = 0; i < 4; i++)
