@@ -23,10 +23,10 @@ public class MyReservationActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item);
+        setContentView(R.layout.book_item);
 
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
-        SimpleAdapter adapter=new SimpleAdapter(this,getData(),R.layout.item,new String[]{"booking_date","booking_state","booking_address","director","meeting_date","meeting_time","description"},new int[]{R.id.booking_date,R.id.booking_state,R.id.booking_address,R.id.director,R.id.meeting_date,R.id.meeting_time,R.id.description});
+        SimpleAdapter adapter=new SimpleAdapter(this,getData(),R.layout.book_item,new String[]{"booking_date","booking_state","booking_address","director","meeting_date","meeting_time","description"},new int[]{R.id.booking_date,R.id.booking_state,R.id.booking_address,R.id.director,R.id.meeting_date,R.id.meeting_time,R.id.description});
         setListAdapter(adapter);
         ListView lv=getListView();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
