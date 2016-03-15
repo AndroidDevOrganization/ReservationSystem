@@ -1,5 +1,6 @@
 package com.dbis.reservationsystem;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
@@ -152,5 +154,10 @@ public class MainActivity extends AppCompatActivity
 
     public void logout(View source) {
 
+    }
+
+    public void clickBt1(View source) {
+        Intent mainToBook =new Intent(MainActivity.this,bookdetailActivity.class);
+        startActivity(mainToBook);
     }
 }

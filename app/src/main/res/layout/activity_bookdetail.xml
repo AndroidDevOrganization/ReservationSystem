@@ -16,13 +16,14 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:background="@drawable/title_btn_back"
-            android:onClick="register_back" >
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:contentDescription="@string/back"
-                android:src="@drawable/back" />
+                android:src="@drawable/back"
+                android:onClick="register_back"/>
 
             <ImageView
                 android:layout_width="30dp"
@@ -147,7 +148,6 @@
                 android:gravity="center_vertical"
                 android:text="@string/date"
                 android:textSize="16sp"/>
-
             <EditText
                 android:id="@+id/etMeetingDate"
                 android:layout_width="fill_parent"
@@ -165,11 +165,13 @@
                 android:gravity="center_vertical"
                 android:textSize="16sp"
                 android:text="@string/sttime" />
-
-            <EditText
-                android:id="@+id/etBeginTime"
+            <Spinner
+                android:id="@+id/spBeginTime"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="40dp"
+                android:background="@drawable/txt_style"
+                android:entries="@array/startTime"
+                android:paddingLeft="15dp" />
         </TableRow>
         <TableRow
             android:layout_width="fill_parent"
@@ -183,10 +185,13 @@
                 android:text="@string/endtime"
                 android:textSize="16sp"/>
 
-            <EditText
-                android:id="@+id/etEndTime"
+            <Spinner
+                android:id="@+id/spEndTime"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="40dp"
+                android:background="@drawable/txt_style"
+                android:entries="@array/endTime"
+                android:paddingLeft="15dp" />
         </TableRow>
 
     </TableLayout>
