@@ -1,5 +1,6 @@
 package com.dbis.reservationsystem;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,7 +23,6 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.dbis.reservationsystem.Entity.MeetingRoom;
 import com.dbis.reservationsystem.sqlite.DBManager;
@@ -238,5 +238,10 @@ public class MainActivity extends AppCompatActivity
 
     public void logout(View source) {
 
+    }
+
+    public void clickBt1(View source) {
+        Intent mainToBook =new Intent(MainActivity.this,BookDetailActivity.class);
+        startActivity(mainToBook);
     }
 }

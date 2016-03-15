@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.dbis.reservationsystem.BookDetailActivity">
+    <item
+        android:id="@+id/Save"
+        android:contentDescription="@string/logo"
+        android:icon="@drawable/save"
+        android:orderInCategory="100"
+        android:title="@string/save"
+        app:showAsAction="always" />
+</menu>

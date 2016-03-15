@@ -7,56 +7,57 @@
     android:background="#EEEEEE"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout
-        android:id="@+id/rl_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:background="#4BA6A7"
-        android:gravity="center_vertical" >
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_layout"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:background="#4BA6A7"-->
+        <!--android:gravity="center_vertical" >-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:background="@drawable/title_btn_back"
-            android:onClick="register_back" >
+        <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="fill_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@drawable/title_btn_back"&ndash;&gt;-->
+            <!--&lt;!&ndash;>&ndash;&gt;-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:contentDescription="@string/back"
-                android:src="@drawable/back" />
+            <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="fill_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:contentDescription="@string/back"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:src="@drawable/back"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:onClick="register_back"/>&ndash;&gt;-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/logo"
-                android:src="@drawable/bookicon" />
+            <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="30dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="30dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="center_vertical"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:contentDescription="@string/logo"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:src="@drawable/bookicon" />&ndash;&gt;-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/bookdetail"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="center_vertical"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="@string/bookdetail"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:textColor="#000000"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:textSize="18sp" />&ndash;&gt;-->
 
-        </LinearLayout>
+        <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
 
-        <ImageView
-            android:id="@+id/ivSave"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/logo"
-            android:src="@drawable/save"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="14dp"
-            android:layout_marginEnd="14dp" />
+        <!--<ImageView-->
+            <!--android:id="@+id/ivSave"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:contentDescription="@string/logo"-->
+            <!--android:src="@drawable/save"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_marginRight="14dp"-->
+            <!--android:layout_marginEnd="14dp" />-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
     
     <TableLayout
         android:layout_width="fill_parent"
@@ -148,7 +149,6 @@
                 android:gravity="center_vertical"
                 android:text="@string/date"
                 android:textSize="16sp"/>
-
             <EditText
                 android:id="@+id/etMeetingDate"
                 android:layout_width="fill_parent"
@@ -166,11 +166,13 @@
                 android:gravity="center_vertical"
                 android:textSize="16sp"
                 android:text="@string/sttime" />
-
-            <EditText
-                android:id="@+id/etBeginTime"
+            <Spinner
+                android:id="@+id/spBeginTime"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="40dp"
+                android:background="@drawable/txt_style"
+                android:entries="@array/startTime"
+                android:paddingLeft="15dp" />
         </TableRow>
         <TableRow
             android:layout_width="fill_parent"
@@ -184,10 +186,13 @@
                 android:text="@string/endtime"
                 android:textSize="16sp"/>
 
-            <EditText
-                android:id="@+id/etEndTime"
+            <Spinner
+                android:id="@+id/spEndTime"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="40dp"
+                android:background="@drawable/txt_style"
+                android:entries="@array/endTime"
+                android:paddingLeft="15dp" />
         </TableRow>
 
     </TableLayout>
