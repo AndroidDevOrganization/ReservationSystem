@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +34,12 @@ public class MyReservationActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                TextView tv= (TextView) view.findViewById(R.id.booking_date);
 //                Toast.makeText(getApplicationContext(),tv.getText(),Toast.LENGTH_SHORT).show();
-                //ĞÂ½¨Ò»¸öÏÔÊ½ÒâÍ¼£¬µÚÒ»¸ö²ÎÊıÎªµ±Ç°ActivityÀà¶ÔÏó£¬µÚ¶ş¸ö²ÎÊıÎªÄãÒª´ò¿ªµÄActivityÀà
-                Intent intent =new Intent( MyReservationActivity.this,BookDetailActivity.class);
+                //æ–°å»ºä¸€ä¸ªæ˜¾å¼æ„å›¾ï¼Œç¬¬ä¸€ä¸ªå‚æ•°ä¸ºå½“å‰Activityç±»å¯¹è±¡ï¼Œç¬¬äºŒä¸ªå‚æ•°ä¸ºä½ è¦æ‰“å¼€çš„Activityç±»
+                Intent intent =new Intent(MyReservationActivity.this, BookDetailActivity.class);
 
-                //ÓÃBundleĞ¯´øÊı¾İ
+                //ç”¨Bundleæºå¸¦æ•°æ®
                 Bundle bundle=new Bundle();
-                //´«µİ²ÎÊı
+                //ä¼ é€’å‚æ•°
                 TextView tv1=(TextView)view.findViewById(R.id.booking_address);
                 TextView tv2=(TextView)view.findViewById(R.id.director);
                 TextView tv3=(TextView)view.findViewById(R.id.meeting_date);
@@ -63,32 +62,32 @@ public class MyReservationActivity extends ListActivity {
         Map<String,Object> value =new HashMap<String,Object>();
         List<Map<String,Object>> lm =new ArrayList<Map<String,Object>>();
         value.put("booking_date","20160303");
-        value.put("booking_state","ÒÑÔ¤Ô¼");
-        value.put("booking_address","Ö÷Â¥Ğ¡ÀñÌÃ");
-        value.put("director","ÕÅÓ¨");
+        value.put("booking_state","å·²é¢„çº¦");
+        value.put("booking_address","ä¸»æ¥¼å°ç¤¼å ‚");
+        value.put("director","å¼ è¹");
         value.put("meeting_date","20160303");
-        value.put("meeting_time","ÏÂÎç3µã-5µã");
-        value.put("description", "µÆ¹âÁÁÆğÀ´ÒôÀÖÏìÆğÀ´£¡£¡£¡");
+        value.put("meeting_time","ä¸‹åˆ3ç‚¹-5ç‚¹");
+        value.put("description", "ç¯å…‰äº®èµ·æ¥éŸ³ä¹å“èµ·æ¥ï¼ï¼ï¼");
         lm.add(value);
 
         value =new HashMap();
         value.put("booking_date","20160304");
-        value.put("booking_state","ÒÑÔ¤Ô¼");
-        value.put("booking_address","¶şÖ÷");
-        value.put("director","ÕÅÓ¨");
+        value.put("booking_state","å·²é¢„çº¦");
+        value.put("booking_address","äºŒä¸»");
+        value.put("director","å¼ è¹");
         value.put("meeting_date","20160304");
-        value.put("meeting_time","ÏÂÎç2µã-5µã");
-        value.put("description","µÆ¹âÁÁÆğÀ´ÒôÀÖÏìÆğÀ´£¡£¡£¡");
+        value.put("meeting_time","ä¸‹åˆ2ç‚¹-5ç‚¹");
+        value.put("description","ç¯å…‰äº®èµ·æ¥éŸ³ä¹å“èµ·æ¥ï¼ï¼ï¼");
         lm.add(value);
 
         value =new HashMap();
         value.put("booking_date","20160305");
-        value.put("booking_state","ÒÑÔ¤Ô¼");
-        value.put("booking_address","¼Æ¿ØÂ¥");
-        value.put("director","ÕÅÓ¨");
+        value.put("booking_state","å·²é¢„çº¦");
+        value.put("booking_address","è®¡æ§æ¥¼");
+        value.put("director","å¼ è¹");
         value.put("meeting_date","20160305");
-        value.put("meeting_time","ÏÂÎç3µã-4µã");
-        value.put("description","µÆ¹âÁÁÆğÀ´ÒôÀÖÏìÆğÀ´£¡£¡£¡");
+        value.put("meeting_time","ä¸‹åˆ3ç‚¹-4ç‚¹");
+        value.put("description","ç¯å…‰äº®èµ·æ¥éŸ³ä¹å“èµ·æ¥ï¼ï¼ï¼");
         lm.add(value);
 
         return  lm;
