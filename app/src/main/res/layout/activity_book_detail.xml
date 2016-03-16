@@ -23,7 +23,186 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#C4C4C4"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <include layout="@layout/activity_bookdetail" />
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:collapseColumns="2"
+            android:stretchColumns="1"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="10dp">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/roomname"
+                    android:textSize="16sp"/>
+
+                <Spinner
+                    android:id="@+id/spSex"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/txt_style"
+                    android:entries="@array/roomname"
+                    android:paddingLeft="15dp"
+                    android:prompt="@string/tips" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/place"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/cantchan"
+                    android:textSize="16sp"/>
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/manager"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/etSupervisor"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" />
+            </TableRow>
+
+
+
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:collapseColumns="2"
+            android:stretchColumns="1"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="10dp">
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/date"
+                    android:textSize="16sp"/>
+                <EditText
+                    android:id="@+id/etMeetingDate"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:text="@string/sttime" />
+                <Spinner
+                    android:id="@+id/spBeginTime"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/txt_style"
+                    android:entries="@array/startTime"
+                    android:paddingLeft="15dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/endtime"
+                    android:textSize="16sp"/>
+
+                <Spinner
+                    android:id="@+id/spEndTime"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/txt_style"
+                    android:entries="@array/endTime"
+                    android:paddingLeft="15dp" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:collapseColumns="2"
+            android:stretchColumns="1"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="10dp">
+
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:text="@string/describe"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/etDescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="3"
+                    android:textSize="18sp"
+                    android:gravity="top"
+                    android:background="@drawable/shape"/>
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

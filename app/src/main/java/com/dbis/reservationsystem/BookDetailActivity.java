@@ -1,16 +1,12 @@
 package com.dbis.reservationsystem;
-
-import android.app.Activity;
-
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -19,14 +15,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.dbis.reservationsystem.sqlite.DBManager;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import com.dbis.reservationsystem.sqlite.DBManager;
+
 
 //to fill the adaptor, need String[]
 
@@ -74,6 +69,12 @@ public class BookDetailActivity extends AppCompatActivity {
         this.spnEndTime = (Spinner) findViewById(R.id.spEndTime);
         this.etDescription = (EditText) findViewById(R.id.etDescription);
 
+        // get the parameters delivered from the MainActivity
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String SroomName = bundle.getString("room_name");
+        tvRoomLocation.setText(bundle.getString("location"));
+
         roomNames = dbManager.getAllRoomName();
         nameNum = roomNames.size();
         namesToFill = new String [nameNum];
@@ -85,6 +86,8 @@ public class BookDetailActivity extends AppCompatActivity {
         // define the mode by ourselves
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnRoomName.setAdapter(spnAdapter);
+
+        spnRoomName.setSelection(spnAdapter.getPosition(SroomName));
         // bind the listener
         spnRoomName.setOnItemSelectedListener(new RoomNameItemSelectedListener());
         //adjust the style for startTime
