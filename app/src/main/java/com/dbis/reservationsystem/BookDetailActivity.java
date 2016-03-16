@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.dbis.reservationsystem.Entity.RecordTime;
 import com.dbis.reservationsystem.sqlite.DBManager;
 
 
@@ -162,11 +163,25 @@ public class BookDetailActivity extends AppCompatActivity {
                     String useEnd = rDate + " " + spnEndTime.getSelectedItem().toString()+":00";
                     String state = "1";
                     String description  = etDescription.getText().toString();
-                    //to get the now date
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                    String reserveTime = df.format(new Date());// new Date()为获取当前系统时间
-                    dbManager.insertIntoRecord(roomNameNow , username ,useBegin ,useEnd ,state ,description ,reserveTime);
-                    Toast.makeText(getApplicationContext(),"预约成功~" , Toast.LENGTH_LONG).show();
+
+                    //to test if have conflicts
+                    List <RecordTime >recordTimes = dbManager.getRecordTimebyRoomNameAndDate(roomNameNow,rDate);
+                    RecordTime recordNow = new RecordTime(useBegin,useEnd);
+                    boolean haveConfict1 = false;
+                    for(RecordTime recordTime :recordTimes)
+                    {
+                        if(haveConfict(recordTime,recordNow))
+                            haveConfict1 = true;
+                    }
+                    if(haveConfict1)
+                        Toast.makeText(getApplicationContext(),"该天本时间段已被预约，请重新选择预约时间或日期" , Toast.LENGTH_LONG).show();
+                    else {
+                        //to get the now date
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                        String reserveTime = df.format(new Date());// new Date()为获取当前系统时间
+                        dbManager.insertIntoRecord(roomNameNow, username, useBegin, useEnd, state, description, reserveTime);
+                        Toast.makeText(getApplicationContext(), "预约成功~", Toast.LENGTH_LONG).show();
+                    }
                     break;
 
             }
@@ -179,5 +194,31 @@ public class BookDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_bookdetail, menu);
         return true;
     }
+    //to deal with the conflict reserve problem
 
+    public boolean haveConfict(RecordTime t1,RecordTime t2)
+    {
+        String A1 = t1.getBeginTime();
+        String A2 = t1.getEndTime();
+        String B1 = t2.getBeginTime();
+        String B2 = t2.getEndTime();
+        String begin = getMax(A1, B1);
+        String end = getMin(A2,B2);
+        if (end.compareTo(begin) < 0 )
+            return false;
+        else
+            return true;
+    }
+    public String getMax (String A1,String A2)
+    {
+        if(A1.compareTo(A2) < 0)
+            return A2;
+        else return A1;
+    }
+    public String getMin (String A1,String A2)
+    {
+        if(A1.compareTo(A2) < 0)
+            return A1;
+        else return A2;
+    }
 }

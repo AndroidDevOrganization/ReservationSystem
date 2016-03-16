@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.dbis.reservationsystem.Entity.MeetingRoom;
+import com.dbis.reservationsystem.Entity.RecordTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,4 +82,23 @@ public class DBManager {
         db.close();
         return mrlist;
     }
+    //
+    public List<RecordTime > getRecordTimebyRoomNameAndDate(String roomName ,String date)
+    {
+        db = helper.getReadableDatabase();
+        String Qdate = date + "%";
+        ArrayList<RecordTime > recordTimes = new ArrayList<RecordTime>();
+        Cursor c = db.rawQuery("select useBegin,useEnd from reserveRecord where roomname = ? and useBegin LIKE ?",new String []{roomName,Qdate});
+        while(c.moveToNext())
+        {
+            String beginTime = c.getString(0);
+            String endTime = c.getString(1);
+            RecordTime recordTime = new RecordTime(beginTime,endTime);
+            recordTimes.add(recordTime);
+        }
+        c.close();
+        db.close();
+        return recordTimes;
+    }
+
 }
