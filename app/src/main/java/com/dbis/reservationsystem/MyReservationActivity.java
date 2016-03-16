@@ -152,7 +152,7 @@ public class MyReservationActivity extends AppCompatActivity
             String [] dateAndBeginTime = tmpMyResItem.getUseBeginTime().split(" ");
             String [] beginTime = dateAndBeginTime[1].split(":");
             String [] endTime = tmpMyResItem.getUseEndTime().split(" ")[1].split(":");
-            holder.myres_meetingTime.setText(dateAndBeginTime[0] + "  " + beginTime[0] + " ~ " + endTime[0]);
+            holder.myres_meetingTime.setText(dateAndBeginTime[0] + ", " + Integer.parseInt(beginTime[0]) + ":00-" + Integer.parseInt(endTime[0]) + ":00");
             holder.myres_state.setVisibility(View.VISIBLE);
 
             // put parameters to transfer
