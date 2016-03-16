@@ -8,6 +8,7 @@ import com.dbis.reservationsystem.Entity.MeetingRoom;
 import com.dbis.reservationsystem.Entity.MyReservation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,11 +18,11 @@ public class DBManager {
     private SQLiteDBHelper helper;
     private SQLiteDatabase db;
 
-    public DBManager(Context context){
+    public DBManager(Context context) {
         helper = new SQLiteDBHelper(context);
     }
-    public List<String> getAllRoomName()
-    {
+
+    public List<String> getAllRoomName() {
         db = helper.getReadableDatabase();
         ArrayList<String> roomNames = new ArrayList<String>();
         Cursor c = db.rawQuery("select roomname from meetingRoomInfo",null);
@@ -35,8 +36,8 @@ public class DBManager {
         db.close();
         return roomNames;
     }
-    public String  getLocationByName(String roomName)
-    {
+
+    public String  getLocationByName(String roomName) {
         db = helper.getReadableDatabase();
         String roomLocation = null ;
         Cursor c = db.rawQuery("select roomlocation from meetingRoomInfo where roomname = ?",new String[]{roomName});
@@ -47,8 +48,8 @@ public class DBManager {
         db.close();
         return roomLocation;
     }
-    public void insertIntoRecord(String roomName,String username ,String useBegin ,String useEnd ,String state ,String description ,String reservetime)
-    {
+
+    public void insertIntoRecord(String roomName,String username ,String useBegin ,String useEnd ,String state ,String description ,String reservetime) {
         db = helper.getWritableDatabase();
         // do not to have ' ' outside the ?
         String sql = "insert into reserveRecord(roomname,username,useBegin,useEnd,state ,description ,reservetime) " +
@@ -82,21 +83,23 @@ public class DBManager {
         db.close();
         return mrlist;
     }
+
     public List<MyReservation> getMyReservationList() {
         db = helper.getReadableDatabase();
         List<MyReservation> mrlist = new ArrayList<MyReservation>();
-        Cursor c = db.rawQuery("select roomname,username,useBegin,state,description from reserveRecord", null);
+        Cursor c = db.rawQuery("select * from reserveRecord", null);
         while(c.moveToNext()) {
-            String roomname = c.getString(0);
-            String username = c.getString(1);
-            String useBegin = c.getString(2);
-            String state = c.getString(3);
-            String description = c.getString(4);
+            String roomName = c.getString(1);
+            String userName = c.getString(2);
+            String useBeginTime = c.getString(3);
+            String userEndTime = c.getString(4);
+            String state = c.getString(5);
+            String description = c.getString(6);
+            String bookingTime = c.getString(7);
             if(description == null || description.equals(""))
                 description = "（暂无）";
 
-
-            MyReservation mr = new MyReservation(roomname, username,useBegin, state, description);
+            MyReservation mr = new MyReservation(roomName, userName, state, description, useBeginTime, userEndTime, bookingTime);
             mrlist.add(mr);
         }
         for(int i = 0; i < 4; i++)

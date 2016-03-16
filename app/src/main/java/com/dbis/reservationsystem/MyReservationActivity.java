@@ -43,8 +43,6 @@ public class MyReservationActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // create SQLite DB
-        createmyDB();
         mrlist = new DBManager(this).getMyReservationList();
 
         // for recyclerView of room list
@@ -61,15 +59,6 @@ public class MyReservationActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
@@ -121,17 +110,17 @@ public class MyReservationActivity extends AppCompatActivity
 
             public final View mView;
 
-            public final TextView myres_time, myres_address, myres_username, myres_description,myres_state;
+            public final TextView myres_address, myres_username, myres_description, myres_state, myres_meetingTime;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                myres_time = (TextView) view.findViewById(R.id.myres_time);
+                //myres_time = (TextView) view.findViewById(R.id.myres_time);
                 myres_address = (TextView) view.findViewById(R.id.myres_address);
                 myres_username = (TextView) view.findViewById(R.id.myres_username);
                 myres_description = (TextView) view.findViewById(R.id.myres_description);
                 myres_state = (TextView) view.findViewById(R.id.myres_state);
-
+                myres_meetingTime = (TextView) view.findViewById(R.id.myres_meetingTime);
             }
         }
 
@@ -156,14 +145,23 @@ public class MyReservationActivity extends AppCompatActivity
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             MyReservation tmpMyResItem = mValues.get(position);
-            holder.myres_time.setText(tmpMyResItem.getUseBegin());
-            holder.myres_username.setText(tmpMyResItem.getUsername());
-            holder.myres_address.setText(tmpMyResItem.getRoomname());
+            //holder.myres_time.setText(tmpMyResItem.getBookingTime());
+            holder.myres_username.setText(tmpMyResItem.getUserName());
+            holder.myres_address.setText(tmpMyResItem.getRoomName());
             holder.myres_description.setText(tmpMyResItem.getDescription());
+            String [] dateAndBeginTime = tmpMyResItem.getUseBeginTime().split(" ");
+            String [] beginTime = dateAndBeginTime[1].split(":");
+            String [] endTime = tmpMyResItem.getUseEndTime().split(" ")[1].split(":");
+            holder.myres_meetingTime.setText(dateAndBeginTime[0] + "  " + beginTime[0] + " ~ " + endTime[0]);
             holder.myres_state.setVisibility(View.VISIBLE);
 
-
-
+            // put parameters to transfer
+            holder.mBundle.putString("room_name", tmpMyResItem.getRoomName());
+            holder.mBundle.putString("user_name", tmpMyResItem.getUserName());
+            holder.mBundle.putString("date", dateAndBeginTime[0]);
+            holder.mBundle.putString("begin_time", beginTime[0] + ":" + beginTime[1]);
+            holder.mBundle.putString("end_time", endTime[0] + ":" + endTime[1]);
+            holder.mBundle.putString("description", tmpMyResItem.getDescription());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -176,23 +174,12 @@ public class MyReservationActivity extends AppCompatActivity
                 }
             });
 
-
         }
 
         @Override
         public int getItemCount() {
             return mValues.size();
         }
-    }
-
-    // create SQLite DB
-    public void createmyDB() {
-        SQLiteDBHelper sdh = new SQLiteDBHelper(getApplicationContext());
-        //must do this ,to produce the database file
-        SQLiteDatabase sdb = sdh.getWritableDatabase();
-
-        sdb.close();
-        sdh.close();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -202,10 +189,8 @@ public class MyReservationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-//            if (this != MainActivity.this) {
                 Intent intent = new Intent(this, MainActivity.class);
                 this.startActivity(intent);
-//            }
         } else if (id == R.id.nav_myReservation) {
             if (this != MyReservationActivity.this) {
             Intent intent = new Intent(this, MyReservationActivity.class);

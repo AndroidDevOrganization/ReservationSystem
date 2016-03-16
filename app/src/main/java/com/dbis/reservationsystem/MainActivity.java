@@ -214,11 +214,10 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(this, MainActivity.class);
                 this.startActivity(intent);
             }
+
         } else if (id == R.id.nav_myReservation) {
-//            if (this != MyReservationActivity.this) {
                 Intent intent = new Intent(this, MyReservationActivity.class);
                 this.startActivity(intent);
-//            }
         } else if (id == R.id.nav_collection) {
 
         } else if (id == R.id.nav_theme) {
