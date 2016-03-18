@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +34,6 @@ public class BookDetailActivity extends AppCompatActivity {
     private EditText etSupervisor;
     private EditText etMeetingDate;
     private EditText etDescription;
-    private ImageView ivSave;
     private DBManager dbManager;
     private List<String > roomNames;
     private String[] namesToFill;
@@ -164,6 +162,13 @@ public class BookDetailActivity extends AppCompatActivity {
                     String state = "1";
                     String description  = etDescription.getText().toString();
 
+                    //can't allow the null rDate
+                    if(rDate.isEmpty())
+                    {
+                        Toast.makeText(getApplicationContext(),"请选择预约日期" , Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
                     //to test if have conflicts
                     List <RecordTime >recordTimes = dbManager.getRecordTimebyRoomNameAndDate(roomNameNow,rDate);
                     RecordTime recordNow = new RecordTime(useBegin,useEnd);
@@ -176,11 +181,17 @@ public class BookDetailActivity extends AppCompatActivity {
                     if(haveConfict1)
                         Toast.makeText(getApplicationContext(),"该天本时间段已被预约，请重新选择预约时间或日期" , Toast.LENGTH_LONG).show();
                     else {
+                        if(username.isEmpty())
+                        {
+                            Toast.makeText(getApplicationContext(),"请填写负责人信息" , Toast.LENGTH_LONG).show();
+                            break;
+                        }
                         //to get the now date
                         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                         String reserveTime = df.format(new Date());// new Date()为获取当前系统时间
                         dbManager.insertIntoRecord(roomNameNow, username, useBegin, useEnd, state, description, reserveTime);
                         Toast.makeText(getApplicationContext(), "预约成功~", Toast.LENGTH_LONG).show();
+                        goToMainActivity();
                     }
                     break;
 
@@ -220,5 +231,12 @@ public class BookDetailActivity extends AppCompatActivity {
         if(A1.compareTo(A2) < 0)
             return A1;
         else return A2;
+    }
+    public void goToMainActivity()
+    {
+        Intent bookToMain =new Intent(BookDetailActivity.this,MainActivity.class);
+        startActivity(bookToMain);
+        //close this Activity
+        finish();
     }
 }
