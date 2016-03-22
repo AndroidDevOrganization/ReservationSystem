@@ -156,6 +156,7 @@ public class MyReservationActivity extends AppCompatActivity
             holder.myres_state.setVisibility(View.VISIBLE);
 
             // put parameters to transfer
+            holder.mBundle.putString("from","MyReservation");
             holder.mBundle.putString("room_name", tmpMyResItem.getRoomName());
             holder.mBundle.putString("user_name", tmpMyResItem.getUserName());
             holder.mBundle.putString("date", dateAndBeginTime[0]);

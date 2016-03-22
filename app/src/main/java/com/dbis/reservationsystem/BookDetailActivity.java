@@ -45,6 +45,9 @@ public class BookDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         int nameNum;
+        String SroomName = "会议室553";
+        String SbeginTime = "08:00";
+        String SendTime = "09:00";
         String startTime [] ={"08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00"};
         String endTime[] = {"09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"};
 
@@ -71,8 +74,21 @@ public class BookDetailActivity extends AppCompatActivity {
         // get the parameters delivered from the MainActivity
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String SroomName = bundle.getString("room_name");
-        tvRoomLocation.setText(bundle.getString("location"));
+        if(bundle.getString("from").equals("Main"))
+        {
+            SroomName = bundle.getString("room_name");
+            tvRoomLocation.setText(bundle.getString("location"));
+        }
+        else if(bundle.getString("from").equals("MyReservation"))
+        {
+            SroomName = bundle.getString("room_name");
+            etSupervisor.setText(bundle.getString("user_name"));
+            etMeetingDate.setText(bundle.getString("date"));
+            SbeginTime = bundle.getString("begin_time");
+            SendTime = bundle.getString("end_time");
+            etDescription.setText(bundle.getString("description"));
+        }
+
 
         roomNames = dbManager.getAllRoomName();
         nameNum = roomNames.size();
@@ -94,11 +110,13 @@ public class BookDetailActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item,startTime);
         spnstartTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnBeginTime.setAdapter(spnstartTimeAdapter);
+        spnBeginTime.setSelection(spnAdapter.getPosition(SbeginTime));
         //for endTime
         spnendTimeAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item,endTime);
         spnendTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnEndTime.setAdapter(spnendTimeAdapter);
+        spnEndTime.setSelection(spnAdapter.getPosition(SendTime));
 
         final Calendar c =Calendar.getInstance();
         etMeetingDate.setOnClickListener(new View.OnClickListener() {

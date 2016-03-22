@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity
                 holder.mConfirm.setVisibility(View.INVISIBLE);
 
             // put parameters to transfer
+            holder.mBundle.putString("from","Main");
             holder.mBundle.putString("room_name", tmpRoomItem.getRoomName());
             holder.mBundle.putString("location", tmpRoomItem.getLocation());
 
