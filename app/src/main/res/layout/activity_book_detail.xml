@@ -201,8 +201,19 @@
                     android:background="@drawable/shape"/>
             </TableRow>
 
-        </TableLayout>
 
+        </TableLayout>
+        <Button
+            android:id="@+id/btnCheckTimeTable"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_reg_style"
+            android:text="@string/seeTimeTable"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            android:onClick="btnToTimeTable"
+            style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

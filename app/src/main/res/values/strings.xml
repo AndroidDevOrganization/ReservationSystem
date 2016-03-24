@@ -58,5 +58,7 @@
     <string name="opentime">开放时间：</string>
     <string name="homepage"> 首页</string>
     <string name="chantheme"> 切换主题</string>
+    <string name="title_activity_time_table">TimeTableActivity</string>
+    <string name="seeTimeTable">查看该会议室的预约情况</string>
 
 </resources>

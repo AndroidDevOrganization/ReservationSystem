@@ -41,6 +41,7 @@ public class BookDetailActivity extends AppCompatActivity {
     private ArrayAdapter<String > spnstartTimeAdapter;
     private ArrayAdapter<String > spnendTimeAdapter;
     private String roomNameNow;
+    private boolean fromMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +77,13 @@ public class BookDetailActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if(bundle.getString("from").equals("Main"))
         {
+            fromMain = true;
             SroomName = bundle.getString("room_name");
             tvRoomLocation.setText(bundle.getString("location"));
         }
         else if(bundle.getString("from").equals("MyReservation"))
         {
+            fromMain = false;
             SroomName = bundle.getString("room_name");
             etSupervisor.setText(bundle.getString("user_name"));
             etMeetingDate.setText(bundle.getString("date"));
@@ -126,16 +129,16 @@ public class BookDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar c = Calendar.getInstance();
-                        c.set(year,monthOfYear,dayOfMonth);
+                        c.set(year, monthOfYear, dayOfMonth);
                         SimpleDateFormat dfChosen = new SimpleDateFormat("yyyy-MM-dd");
                         SimpleDateFormat dfNow = new SimpleDateFormat("yyyy-MM-dd");
                         //compare if the chose date is earlier than now
-                        if(dfChosen.format(c.getTime()).compareTo(dfNow.format(new Date())) <0)
-                            Toast.makeText(getApplicationContext(),"无法预约该天，请重新选择日期~" , Toast.LENGTH_LONG).show();
+                        if (dfChosen.format(c.getTime()).compareTo(dfNow.format(new Date())) < 0)
+                            Toast.makeText(getApplicationContext(), "无法预约该天，请重新选择日期~", Toast.LENGTH_LONG).show();
                         else
-                        etMeetingDate.setText(dfChosen.format(c.getTime()));
+                            etMeetingDate.setText(dfChosen.format(c.getTime()));
                     }
-                },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
             }
         });
@@ -173,43 +176,46 @@ public class BookDetailActivity extends AppCompatActivity {
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.Save:
-                    String rDate = etMeetingDate.getText().toString();
-                    String username = etSupervisor.getText().toString();
-                    String useBegin = rDate + " " + spnBeginTime.getSelectedItem().toString()+":00";
-                    String useEnd = rDate + " " + spnEndTime.getSelectedItem().toString()+":00";
-                    String state = "1";
-                    String description  = etDescription.getText().toString();
+                    if(fromMain) {
+                        String rDate = etMeetingDate.getText().toString();
+                        String username = etSupervisor.getText().toString();
+                        String useBegin = rDate + " " + spnBeginTime.getSelectedItem().toString() + ":00";
+                        String useEnd = rDate + " " + spnEndTime.getSelectedItem().toString() + ":00";
+                        String state = "1";
+                        String description = etDescription.getText().toString();
 
-                    //can't allow the null rDate
-                    if(rDate.isEmpty())
-                    {
-                        Toast.makeText(getApplicationContext(),"请选择预约日期" , Toast.LENGTH_LONG).show();
-                        break;
-                    }
-
-                    //to test if have conflicts
-                    List <RecordTime >recordTimes = dbManager.getRecordTimebyRoomNameAndDate(roomNameNow,rDate);
-                    RecordTime recordNow = new RecordTime(useBegin,useEnd);
-                    boolean haveConfict1 = false;
-                    for(RecordTime recordTime :recordTimes)
-                    {
-                        if(haveConfict(recordTime,recordNow))
-                            haveConfict1 = true;
-                    }
-                    if(haveConfict1)
-                        Toast.makeText(getApplicationContext(),"该天本时间段已被预约，请重新选择预约时间或日期" , Toast.LENGTH_LONG).show();
-                    else {
-                        if(username.isEmpty())
-                        {
-                            Toast.makeText(getApplicationContext(),"请填写负责人信息" , Toast.LENGTH_LONG).show();
+                        //can't allow the null rDate
+                        if (rDate.isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "请选择预约日期", Toast.LENGTH_LONG).show();
                             break;
                         }
-                        //to get the now date
-                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                        String reserveTime = df.format(new Date());// new Date()为获取当前系统时间
-                        dbManager.insertIntoRecord(roomNameNow, username, useBegin, useEnd, state, description, reserveTime);
-                        Toast.makeText(getApplicationContext(), "预约成功~", Toast.LENGTH_LONG).show();
-                        goToMainActivity();
+
+                        //to test if have conflicts
+                        List<RecordTime> recordTimes = dbManager.getRecordTimebyRoomNameAndDate(roomNameNow, rDate);
+                        RecordTime recordNow = new RecordTime(useBegin, useEnd);
+                        boolean haveConflict1 = false;
+                        for (RecordTime recordTime : recordTimes) {
+                            if (haveConflict(recordTime, recordNow))
+                                haveConflict1 = true;
+                        }
+                        if (haveConflict1)
+                            Toast.makeText(getApplicationContext(), "该天本时间段已被预约，请重新选择预约时间或日期", Toast.LENGTH_LONG).show();
+                        else {
+                            if (username.isEmpty()) {
+                                Toast.makeText(getApplicationContext(), "请填写负责人信息", Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                            //to get the now date
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                            String reserveTime = df.format(new Date());// new Date()为获取当前系统时间
+                            dbManager.insertIntoRecord(roomNameNow, username, useBegin, useEnd, state, description, reserveTime);
+                            Toast.makeText(getApplicationContext(), "预约成功~", Toast.LENGTH_LONG).show();
+                            goToMainActivity();
+                        }
+
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "我的预约方法~", Toast.LENGTH_LONG).show();
                     }
                     break;
 
@@ -225,7 +231,7 @@ public class BookDetailActivity extends AppCompatActivity {
     }
     //to deal with the conflict reserve problem
 
-    public boolean haveConfict(RecordTime t1,RecordTime t2)
+    public boolean haveConflict(RecordTime t1,RecordTime t2)
     {
         String A1 = t1.getBeginTime();
         String A2 = t1.getEndTime();
@@ -256,5 +262,10 @@ public class BookDetailActivity extends AppCompatActivity {
         startActivity(bookToMain);
         //close this Activity
         finish();
+    }
+    public void btnToTimeTable(View v)
+    {
+        Intent bookToTimeTable =new Intent(BookDetailActivity.this,TimeTableActivity.class);
+        startActivity(bookToTimeTable);
     }
 }
