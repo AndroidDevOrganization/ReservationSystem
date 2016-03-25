@@ -3,6 +3,7 @@ package com.dbis.reservationsystem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +24,10 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
+import com.dbis.reservationsystem.Entity.Global;
 import com.dbis.reservationsystem.Entity.MeetingRoom;
 import com.dbis.reservationsystem.sqlite.DBManager;
 import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
     private RecyclerView mRecyclerView;
     private List<MeetingRoom> mrlist;
+    private long exitTime=0;//按两次退出
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +78,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     // function for goto back
+    //2s内按两次退出 3.25 by WuChen
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再次按下返回键退出预约系统",
+                        Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+                return ;
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -243,5 +256,23 @@ public class MainActivity extends AppCompatActivity
     public void clickBt1(View source) {
         Intent mainToBook =new Intent(MainActivity.this,BookDetailActivity.class);
         startActivity(mainToBook);
+    }
+    public String  testLogin(){
+        SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
+        String result=sp.getString("login","false");
+        return result;
+    }
+    protected void onResume() {
+        super.onResume();
+
+        if(!testLogin().equals("true")){
+            Toast.makeText(getApplicationContext(),"请先登录~",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+        }else {
+            SharedPreferences sp = getSharedPreferences("UserInfo", MODE_PRIVATE);
+            Global.setAccount(sp.getString("account", ""));
+            Global.setPassword(sp.getString("password", ""));
+        }
     }
 }

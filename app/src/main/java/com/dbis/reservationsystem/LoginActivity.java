@@ -1,6 +1,8 @@
 package com.dbis.reservationsystem;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
@@ -8,25 +10,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.os.Handler;
+import android.widget.Toast;
 
+import com.dbis.reservationsystem.Entity.Global;
 import com.dbis.reservationsystem.HTTPUtil.PostUtil;
 
 /**
  * Created by nklyp on 2016/3/9.
  */
 public class LoginActivity extends Activity {
-    Button btnLogin;
-    Button btnRegister;
-    TextView txtShow;
-    String result;
-    EditText txtAccount,txtPassword;
+    private Button btnLogin;
+    private Button btnRegister;
+    private TextView txtShow;
+    private String result;
+    private EditText txtAccount,txtPassword;
 
-    Handler handler = new Handler()
+    private Handler handler = new Handler()
     {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0x123)
             {
+               // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                 int rValue = -2;
                 try {
                     rValue = Integer.parseInt(result);
@@ -37,13 +42,15 @@ public class LoginActivity extends Activity {
                 switch (rValue)
                 {
                     case -2:
-                        result = "爬字错误";break;
+                        result = "网络异常，请检查您的网络连接";break;
                     case -1:
                         result = "api端的未知错误";break;
                     case 0:
                         result = "用户名不存在";break;
                     case 1:
-                        result = "老师登录成功";break;
+                        result = "老师登录成功";
+                        loginSuccessfully();
+                        break;
                     case 2:
                         result = "密码错误";break;
                     case 3:
@@ -91,5 +98,31 @@ public class LoginActivity extends Activity {
             }
         });
 
+    }
+    public void loginSuccessfully()
+    {//保存下登录的信息...似乎记录下password是一个不好的行径....
+        //全局变量暂时没有用到，因为没有需要直接登记的信息
+        Toast.makeText(getApplicationContext(),"登录成功~",Toast.LENGTH_SHORT).show();
+        SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
+        SharedPreferences.Editor ed=sp.edit();
+        String account = txtAccount.getText().toString();
+        String password = txtPassword.getText().toString();
+        ed.putString("login","true");
+        ed.putString("account",account);
+        ed.putString("password",password);
+        ed.commit();
+        //注意提交
+        Global.setAccount(account);
+        Global.setPassword(password);
+
+        loginGotoMain();
+    }
+    public void loginGotoMain()
+    {
+        Intent loginToMain =new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(loginToMain);
+        finish();
+        //跳转后销毁，保证退出逻辑
+        //如果要注销需要增加按钮功能
     }
 }
