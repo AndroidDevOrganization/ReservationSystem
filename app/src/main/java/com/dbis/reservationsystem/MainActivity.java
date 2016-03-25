@@ -27,7 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.dbis.reservationsystem.Entity.Global;
+import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.Entity.MeetingRoom;
 import com.dbis.reservationsystem.sqlite.DBManager;
 import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
@@ -250,7 +250,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void logout(View source) {
-
+        SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
+        SharedPreferences.Editor ed=sp.edit();
+        ed.putString("login","false");
+        ed.putString("account","");
+        ed.putString("password","");
+        ed.commit();
+        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void clickBt1(View source) {
@@ -269,10 +277,12 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(),"请先登录~",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
+            //必须结束，否则在未登录情况下会有无法退出的情况
+            finish();
         }else {
             SharedPreferences sp = getSharedPreferences("UserInfo", MODE_PRIVATE);
-            Global.setAccount(sp.getString("account", ""));
-            Global.setPassword(sp.getString("password", ""));
+            Teacher.setAccount(sp.getString("account", ""));
+            Teacher.setPassword(sp.getString("password", ""));
         }
     }
 }

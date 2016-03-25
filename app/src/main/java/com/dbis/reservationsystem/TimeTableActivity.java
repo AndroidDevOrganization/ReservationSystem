@@ -6,6 +6,7 @@ import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -55,5 +56,10 @@ public class TimeTableActivity extends Activity {
                 "张莹", "会议室553", "2-13"));
         mList.add(new TimeTableModel(0, 6, 8, 5, "8:20", "10:10", "李忠伟",
                 "李忠伟", "会议室553", "2-13"));
+    }
+    //注意按钮的叠放次序，相对布局下应该叠放在最上层才有效果
+    public void btnBackToBook(View v)
+    {
+        onBackPressed();
     }
 }

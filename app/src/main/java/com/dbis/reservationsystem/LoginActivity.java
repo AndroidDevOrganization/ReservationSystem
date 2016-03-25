@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.dbis.reservationsystem.Entity.Global;
+import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.HTTPUtil.PostUtil;
 
 /**
@@ -112,8 +112,8 @@ public class LoginActivity extends Activity {
         ed.putString("password",password);
         ed.commit();
         //注意提交
-        Global.setAccount(account);
-        Global.setPassword(password);
+        Teacher.setAccount(account);
+        Teacher.setPassword(password);
 
         loginGotoMain();
     }
@@ -125,4 +125,6 @@ public class LoginActivity extends Activity {
         //跳转后销毁，保证退出逻辑
         //如果要注销需要增加按钮功能
     }
+
+
 }

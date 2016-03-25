@@ -1,14 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ffffff"
-    android:orientation="vertical" >
+    android:background="#ffffff">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scrollbars= "none"
         >
+
 <!--注意控件引入时更换包名-->
         <com.dbis.reservationsystem.UI.TimeTableView
             android:id="@+id/main_timetable_ly"
@@ -17,5 +17,13 @@
             android:orientation="vertical" >
         </com.dbis.reservationsystem.UI.TimeTableView>
     </ScrollView>
+    <Button
+        android:id="@+id/btnTimeBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:onClick="btnBackToBook"
+        android:background="@drawable/back" />
 
-</LinearLayout>
+</RelativeLayout>

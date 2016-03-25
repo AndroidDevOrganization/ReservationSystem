@@ -4,7 +4,7 @@ package com.dbis.reservationsystem.Entity;
  * Created by waho on 2016/3/25.
  * 用于在各个activity之间传递信息
  */
-public class Global {
+public class Teacher {
     public static String account;
     public static String password;
 
@@ -13,7 +13,7 @@ public class Global {
     }
 
     public static void setAccount(String account) {
-        Global.account = account;
+        Teacher.account = account;
     }
 
     public static String getPassword() {
@@ -21,7 +21,7 @@ public class Global {
     }
 
     public static void setPassword(String password) {
-        Global.password = password;
+        Teacher.password = password;
     }
 }
 
