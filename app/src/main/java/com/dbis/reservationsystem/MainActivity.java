@@ -255,6 +255,8 @@ public class MainActivity extends AppCompatActivity
         ed.putString("login","false");
         ed.putString("account","");
         ed.putString("password","");
+        ed.putString("id","");
+        ed.putString("name","");
         ed.commit();
         Intent intent=new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);
@@ -283,6 +285,8 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences sp = getSharedPreferences("UserInfo", MODE_PRIVATE);
             Teacher.setAccount(sp.getString("account", ""));
             Teacher.setPassword(sp.getString("password", ""));
+            Teacher.setId(sp.getString("id", ""));
+            Teacher.setName(sp.getString("name",""));
         }
     }
 }

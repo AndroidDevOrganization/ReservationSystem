@@ -7,6 +7,8 @@ package com.dbis.reservationsystem.Entity;
 public class Teacher {
     public static String account;
     public static String password;
+    public static String name;
+    public static String id;
 
     public static String getAccount() {
         return account;
@@ -22,6 +24,22 @@ public class Teacher {
 
     public static void setPassword(String password) {
         Teacher.password = password;
+    }
+
+    public static String getName() {
+        return name;
+    }
+
+    public static void setName(String name) {
+        Teacher.name = name;
+    }
+
+    public static String getId() {
+        return id;
+    }
+
+    public static void setId(String id) {
+        Teacher.id = id;
     }
 }
 

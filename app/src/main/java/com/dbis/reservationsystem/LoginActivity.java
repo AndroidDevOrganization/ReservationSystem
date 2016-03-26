@@ -14,6 +14,17 @@ import android.widget.Toast;
 
 import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.HTTPUtil.PostUtil;
+import com.google.gson.Gson;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * Created by nklyp on 2016/3/9.
@@ -22,8 +33,9 @@ public class LoginActivity extends Activity {
     private Button btnLogin;
     private Button btnRegister;
     private TextView txtShow;
-    private String result;
     private EditText txtAccount,txtPassword;
+    private int backValue;
+    private String teacherID,teacherName,result;
 
     private Handler handler = new Handler()
     {
@@ -31,33 +43,32 @@ public class LoginActivity extends Activity {
         public void handleMessage(Message msg) {
             if (msg.what == 0x123)
             {
-               // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                String resultInfo=null;
+            //   Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                 int rValue = -2;
-                try {
-                    rValue = Integer.parseInt(result);
-                }catch (NumberFormatException e)
-                {
-                    e.printStackTrace();
-                }
+                    rValue = backValue;
+
                 switch (rValue)
                 {
                     case -2:
-                        result = "网络异常，请检查您的网络连接";break;
+                        resultInfo = "网络异常，请检查您的网络连接";break;
                     case -1:
-                        result = "api端的未知错误";break;
+                        resultInfo = "api端的未知错误";break;
                     case 0:
-                        result = "用户名不存在";break;
+                        resultInfo = "用户名不存在";break;
                     case 1:
-                        result = "老师登录成功";
+                        resultInfo = "老师登录成功";
                         loginSuccessfully();
                         break;
                     case 2:
-                        result = "密码错误";break;
+                        resultInfo = "密码错误";break;
                     case 3:
-                        result = "学生登录成功";break;
+                        resultInfo = "学生登录成功";break;
+                    default:
+                        resultInfo = "网络异常，请检查您的网络连接";break;
                 }
 
-                txtShow.setText(result);
+                txtShow.setText(resultInfo);
             }
         }
     };
@@ -74,18 +85,58 @@ public class LoginActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread()
-                {
+                new Thread() {
                     @Override
                     public void run() {
+//                        RequestParams rp=new RequestParams();
+//                        HttpUtils hu=new HttpUtils(3000);
+//                        hu.configDefaultHttpCacheExpiry(1);
+//                        //post请求时使用addBodyParameter方法添加参数
+//                        //get请求时使用addQueryStringParameter方法添加参数
+//                        rp.addBodyParameter("userid", txtAccount.getText().toString());
+//                        rp.addBodyParameter("password",txtPassword.getText().toString());
+//                        hu.send(HttpRequest.HttpMethod.POST, "http://202.113.25.200:8090/api/login", rp, new RequestCallBack<String >() {
+//                            @Override
+//                            public void onSuccess(ResponseInfo<String> responseInfo) {
+//                                JSONObject jo = null;
+//                                try {
+//                                    jo = new JSONObject(responseInfo.result);
+//                                    backValue=jo.getInt("returnvalue");
+//                                    if(backValue ==1)
+//                                    {
+//                                        teacherID = jo.getString("id");
+//                                        teacherName = jo.getString("name");
+//                                    }
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailure(HttpException e, String s) {
+//                                Toast.makeText(getApplicationContext(),"网络连接失败，请检查您的网络",Toast.LENGTH_LONG).show();
+//                            }
+//                        });
                         String params = "";
                         params += "userid=" + txtAccount.getText().toString().trim();
                         params += "&" + "password=" + txtPassword.getText().toString().trim();
-
-
                         result = PostUtil.sendPost(
                                 "http://202.113.25.200:8090/api/login",
                                 params);
+                        JSONObject jo = null;
+                                try {
+                                    jo = new JSONObject(result);
+                                    backValue=jo.getInt("returnvalue");
+                                    if(backValue ==1)
+                                    {
+                                        teacherID = jo.getString("id");
+                                        teacherName = jo.getString("name");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                         handler.sendEmptyMessage(0x123);
                     }
                 }.start();
@@ -94,7 +145,8 @@ public class LoginActivity extends Activity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtShow.setText("注册");
+                txtShow.setText("暂时不提供注册服务~");
+                Toast.makeText(getApplicationContext(), "暂时不提供注册服务~", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,6 +162,8 @@ public class LoginActivity extends Activity {
         ed.putString("login","true");
         ed.putString("account",account);
         ed.putString("password",password);
+        ed.putString("name",teacherName);
+        ed.putString("id",teacherID);
         ed.commit();
         //注意提交
         Teacher.setAccount(account);
@@ -125,6 +179,5 @@ public class LoginActivity extends Activity {
         //跳转后销毁，保证退出逻辑
         //如果要注销需要增加按钮功能
     }
-
 
 }

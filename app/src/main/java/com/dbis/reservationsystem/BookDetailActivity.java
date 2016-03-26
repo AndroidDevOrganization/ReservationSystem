@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.dbis.reservationsystem.Entity.RecordTime;
+import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.sqlite.DBManager;
 
 
@@ -80,6 +81,7 @@ public class BookDetailActivity extends AppCompatActivity {
             fromMain = true;
             SroomName = bundle.getString("room_name");
             tvRoomLocation.setText(bundle.getString("location"));
+            etSupervisor.setText(Teacher.getName());
         }
         else if(bundle.getString("from").equals("MyReservation"))
         {
