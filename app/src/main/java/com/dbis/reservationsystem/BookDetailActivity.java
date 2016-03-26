@@ -268,6 +268,7 @@ public class BookDetailActivity extends AppCompatActivity {
     public void btnToTimeTable(View v)
     {
         Intent bookToTimeTable =new Intent(BookDetailActivity.this,TimeTableActivity.class);
+        bookToTimeTable.putExtra("roomName",spnRoomName.getSelectedItem().toString());
         startActivity(bookToTimeTable);
     }
 }
