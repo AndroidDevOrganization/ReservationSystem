@@ -54,13 +54,11 @@ public class BookDetailActivity extends AppCompatActivity {
         String endTime[] = {"09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00"};
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_book_detail);
 
+// Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-// Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

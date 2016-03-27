@@ -33,10 +33,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TimeTableActivity extends Activity {
-    private String result;
     private TimeTableView mTimaTableView;
     private List<TimeTableModel> mList;
     private JSONArray records;
+    private String result;
     private String roomName;
     private String beginTime;
     private String endTime;
@@ -61,6 +61,7 @@ public class TimeTableActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_table);
+
         mList = new ArrayList<TimeTableModel>();
         mTimaTableView = (TimeTableView) findViewById(R.id.main_timetable_ly);
 
@@ -149,7 +150,6 @@ public class TimeTableActivity extends Activity {
     public void btnWeekPlusSeven(View v)
     {
         dayEnd.add(Calendar.DATE, -6);//先减去6和dayBegin相等，再同时+7
-
         dayBegin.add(Calendar.DATE,  7);
         dayEnd.add(Calendar.DATE,  7);
         //使Activity 重启
@@ -163,8 +163,7 @@ public class TimeTableActivity extends Activity {
     }
     public void btnWeekMinusSeven(View v)
     {
-        dayEnd.add(Calendar.DATE, -6);//先减去6和dayBegin相等，再同时+7
-
+        dayEnd.add(Calendar.DATE, -6);//先减去6和dayBegin相等，再同时
         dayBegin.add(Calendar.DATE,  -7);
         dayEnd.add(Calendar.DATE,  -7);
         Intent intent = getIntent();
