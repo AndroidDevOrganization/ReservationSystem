@@ -2,6 +2,7 @@ package com.dbis.reservationsystem.UI;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -103,7 +104,7 @@ public class TimeTableView extends LinearLayout {
 	/**
 	 * 输入课表名循环判断是否数组存在该课表 如果存在输出true并退出循环 如果不存在则存入colorSt[20]数组
 	 * 
-	 * @param keming
+	 * @param name
 	 * 
 	 */
 	private void addTimeName(String name) {
@@ -182,7 +183,7 @@ public class TimeTableView extends LinearLayout {
 				mWeekName.setTextSize(16);
 				mWeekName.setText(weekname[i - 1]);
 //				//设置背景色为透明，去掉边框
-//				mWeekName.setBackgroundColor(new Color().alpha(0));
+				mWeekName.setBackgroundColor(new Color().alpha(0));
 				mHoriView.addView(mWeekName);
 				mHorizontalWeekLayout.addView(mHoriView);
 			}
@@ -250,12 +251,12 @@ public class TimeTableView extends LinearLayout {
 			l.setHeight(dip2px(TimeTableHeight * MAXNUM) + MAXNUM * 2);
 			l.setWidth(2);
 			//去掉边界线
-		//	l.setBackgroundColor(getResources().getColor(R.color.view_line));
+			l.setBackgroundColor(getResources().getColor(R.color.view_line));
 			mVerticalWeekLaout.addView(l);
 		}
 		addView(mVerticalWeekLaout);
 		//去掉边界线
-		//addView(getWeekLine());
+		addView(getWeekLine());
 	}
 
 	private int getViewWidth() {
@@ -268,8 +269,9 @@ public class TimeTableView extends LinearLayout {
 		Log.v("Start", startnum + "");
 		LinearLayout mStartView = new LinearLayout(getContext());
 		mStartView.setOrientation(VERTICAL);
-		// ViewGroup.LayoutParams linearParams = new ViewGroup.LayoutParams(
-		// dip2px(40), dip2px(100));
+		//本身已经弃用
+//		 ViewGroup.LayoutParams linearParams = new ViewGroup.LayoutParams(
+//		 dip2px(40), dip2px(100));
 
 		for (int i = 1; i < startnum; i++) {
 			TextView mTime = new TextView(getContext());
@@ -277,7 +279,8 @@ public class TimeTableView extends LinearLayout {
 			mTime.setHeight(dip2px(TimeTableHeight));
 			mTime.setWidth(dip2px(TimeTableHeight));
 			mStartView.addView(mTime);
-		//	mStartView.addView(getWeekLine());
+			//去掉边界线
+			mStartView.addView(getWeekLine());
 		}
 		return mStartView;
 	}
@@ -331,15 +334,19 @@ public class TimeTableView extends LinearLayout {
 		int num = model.getEndnum() - model.getStartnum();
 		mTimeTableNameView.setHeight(dip2px((num + 1) * TimeTableHeight) + num
 				* 2);
+		//改变预约记录中的字的颜色
 		mTimeTableNameView.setTextColor(getContext().getResources().getColor(
 				android.R.color.white));
+//		mTimeTableNameView.setTextColor(getResources().getColor(
+//				R.color.text_color));
 		mTimeTableNameView.setWidth(dip2px(50));
 		mTimeTableNameView.setTextSize(16);
 		mTimeTableNameView.setGravity(Gravity.CENTER);
 		mTimeTableNameView
 				.setText(model.getName() + "@" + model.getClassroom());
 		mTimeTableView.addView(mTimeTableNameView);
-		//mTimeTableView.addView(getWeekLine());
+		//去掉边界线
+		mTimeTableView.addView(getWeekLine());
 		mTimeTableView.setBackgroundDrawable(getContext().getResources()
 				.getDrawable(colors[getColornum(model.getName())]));
 		mTimeTableView.setOnClickListener(new OnClickListener() {
@@ -355,7 +362,6 @@ public class TimeTableView extends LinearLayout {
 	 * 转换dp
 	 * 
 	 * @param dpValue
-	 * @param context
 	 * @return
 	 */
 	public int dip2px(float dpValue) {

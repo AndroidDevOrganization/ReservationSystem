@@ -4,6 +4,7 @@
     android:background="#ffffff">
 
     <ScrollView
+        android:id="@+id/svOnly"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scrollbars= "none"
@@ -25,5 +26,35 @@
         android:layout_weight="1"
         android:onClick="btnBackToBook"
         android:background="@drawable/back" />
+    <!--起到调整位置的作用-->
+    <Button
+        android:id="@+id/btnCenterBottom"
+        android:layout_width="5dp"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true" />
+    <Button
+        android:id="@+id/btnWeekBefore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:onClick="btnWeekMinusSeven"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:text="@string/week_before"
+        android:textSize="17sp"
+        android:layout_toLeftOf="@id/btnCenterBottom"/>
+    <Button
+        android:id="@+id/btnWeekAfter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:onClick="btnWeekPlusSeven"
+        android:text="@string/week_next"
+        android:textSize="17sp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btnCenterBottom"/>
 
 </RelativeLayout>

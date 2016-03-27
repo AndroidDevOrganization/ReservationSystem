@@ -1,8 +1,11 @@
 package com.dbis.reservationsystem;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -35,16 +38,22 @@ public class TimeTableActivity extends Activity {
     private List<TimeTableModel> mList;
     private JSONArray records;
     private String roomName;
+    private String beginTime;
+    private String endTime;
+    private static Calendar dayBegin = Calendar.getInstance();
+    private static Calendar dayEnd = Calendar.getInstance();
     private Handler handler = new Handler()
     {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1)
             {
-                Toast.makeText(getApplicationContext(), "获取完毕", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "获取完毕", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), beginTime, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), endTime, Toast.LENGTH_LONG).show();
                 addList();
-                //
-                mTimaTableView.startTimeTable(new String[]{"3.28", "3.29", "3.30", "3.31", "4.01", "4.02", "4.03"}, mList);
+                List <String > daytoFill = fillDays();
+                mTimaTableView.startTimeTable(new String[]{daytoFill.get(0), daytoFill.get(1), daytoFill.get(2), daytoFill.get(3), daytoFill.get(4), daytoFill.get(5), daytoFill.get(6)}, mList);
             }
         }
     };
@@ -60,9 +69,21 @@ public class TimeTableActivity extends Activity {
         new Thread() {
             @Override
             public void run() {
+                Date date=new Date();
+                DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+                String today=format.format(date);
+                //dayBegin= Calendar.getInstance();
+                //dayEnd = Calendar.getInstance();
+                //在此之前一定已经完成对dayBegin和dayEnd的赋值，且两对象值相等
+                dayEnd.add(Calendar.DATE,  6);
+                String todayPlusSeven = format.format(dayEnd.getTime());
+                beginTime = today + " 08:00:00";
+                endTime = todayPlusSeven + " 22:00:00";
+
+
                 String params = "";
-                params += "begintime=" + "2016-03-28 08:00:00";
-                params += "&" + "endTime=" + "2016-04-03 22:00:00";
+                params += "begintime=" + beginTime;
+                params += "&" + "endTime=" + endTime;
                 result = PostUtil.sendPost(
                         "http://202.113.25.200:8090/api/AllBookingsWithTime",
                         params);
@@ -87,6 +108,7 @@ public class TimeTableActivity extends Activity {
                 if(!record.getString("name").equals(roomName))
                     continue;
                 else {
+                    //ddate,beginTime ,endTime 从记录中获取，dayBegin一直是记录当前开始日期的日历变量
                     String ddate = record.getString("beginTime").substring(0, 10);
                     String beginTime = record.getString("beginTime").substring(11);
                     String endTime = record.getString("endTime").substring(11);
@@ -97,7 +119,7 @@ public class TimeTableActivity extends Activity {
                     long from = 0;
                     try {
                         to = df.parse(ddate).getTime();
-                        from = df.parse("2016-03-28").getTime();
+                        from = df.parse(df.format(dayBegin.getTime())).getTime();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -113,10 +135,45 @@ public class TimeTableActivity extends Activity {
 //        mList.add(new TimeTableModel(0, 1, 2, 1, "8:20", "10:10", "张莹",
 //                "张莹", "会议室553", "2-13"));
     }
+
     //注意按钮的叠放次序，相对布局下应该叠放在最上层才有效果
     public void btnBackToBook(View v)
     {
+        //退出时使日期重新回归当日
+        dayBegin = Calendar.getInstance();
+        dayEnd = Calendar.getInstance();
+
         onBackPressed();
+
+    }
+    public void btnWeekPlusSeven(View v)
+    {
+        dayEnd.add(Calendar.DATE, -6);//先减去6和dayBegin相等，再同时+7
+
+        dayBegin.add(Calendar.DATE,  7);
+        dayEnd.add(Calendar.DATE,  7);
+        //使Activity 重启
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+    public void btnWeekMinusSeven(View v)
+    {
+        dayEnd.add(Calendar.DATE, -6);//先减去6和dayBegin相等，再同时+7
+
+        dayBegin.add(Calendar.DATE,  -7);
+        dayEnd.add(Calendar.DATE,  -7);
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
     public int fromTimeToIndex(String from)
     {
@@ -152,5 +209,17 @@ public class TimeTableActivity extends Activity {
             return 15;
         else
             return 1;
+    }
+    public List <String > fillDays ()
+    {
+        List <String > dayReturn = new ArrayList<String >();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        dayReturn.add(format.format(dayBegin.getTime()).substring(5, 10));
+        for ( int i =0;i<6;i++) {
+            dayBegin.add(Calendar.DATE, 1);
+            dayReturn.add(format.format(dayBegin.getTime()).substring(5,10));
+        }
+        dayBegin.add(Calendar.DATE, -6);
+        return dayReturn;
     }
 }
