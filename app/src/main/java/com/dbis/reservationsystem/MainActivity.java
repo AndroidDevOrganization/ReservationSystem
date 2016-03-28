@@ -227,11 +227,13 @@ public class MainActivity extends AppCompatActivity
             if (this != MainActivity.this) {
                 Intent intent = new Intent(this, MainActivity.class);
                 this.startActivity(intent);
+                //finish();
             }
 
         } else if (id == R.id.nav_myReservation) {
                 Intent intent = new Intent(this, MyReservationActivity.class);
                 this.startActivity(intent);
+                //finish();
         } else if (id == R.id.nav_collection) {
 
         } else if (id == R.id.nav_theme) {
@@ -263,10 +265,6 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    public void clickBt1(View source) {
-        Intent mainToBook =new Intent(MainActivity.this,BookDetailActivity.class);
-        startActivity(mainToBook);
-    }
     public String  testLogin(){
         SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
         String result=sp.getString("login","false");

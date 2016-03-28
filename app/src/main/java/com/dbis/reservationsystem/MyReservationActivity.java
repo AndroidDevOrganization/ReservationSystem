@@ -192,10 +192,12 @@ public class MyReservationActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
                 Intent intent = new Intent(this, MainActivity.class);
                 this.startActivity(intent);
+                //finish();
         } else if (id == R.id.nav_myReservation) {
             if (this != MyReservationActivity.this) {
             Intent intent = new Intent(this, MyReservationActivity.class);
             this.startActivity(intent);
+                //finish();
             }
         } else if (id == R.id.nav_collection) {
 
