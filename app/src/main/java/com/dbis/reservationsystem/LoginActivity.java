@@ -15,12 +15,12 @@ import android.widget.Toast;
 import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.HTTPUtil.PostUtil;
 import com.google.gson.Gson;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
+//import com.lidroid.xutils.HttpUtils;
+//import com.lidroid.xutils.exception.HttpException;
+//import com.lidroid.xutils.http.RequestParams;
+//import com.lidroid.xutils.http.ResponseInfo;
+//import com.lidroid.xutils.http.callback.RequestCallBack;
+//import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -258,8 +258,8 @@ public class BookDetailActivity extends AppCompatActivity {
     }
     public void goToMainActivity()
     {
-        Intent bookToMain =new Intent(BookDetailActivity.this,MainActivity.class);
-        startActivity(bookToMain);
+        Intent bookToMyReservation =new Intent(BookDetailActivity.this,MyReservationActivity.class);
+        startActivity(bookToMyReservation);
         //close this Activity
         finish();
     }

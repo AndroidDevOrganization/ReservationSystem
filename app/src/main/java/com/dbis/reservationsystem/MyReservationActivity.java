@@ -58,6 +58,7 @@ public class MyReservationActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(R.id.nav_myReservation);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -69,7 +70,9 @@ public class MyReservationActivity extends AppCompatActivity
         if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -190,12 +193,14 @@ public class MyReservationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-                Intent intent = new Intent(this, MainActivity.class);
-                this.startActivity(intent);
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
+            finish();
         } else if (id == R.id.nav_myReservation) {
             if (this != MyReservationActivity.this) {
-            Intent intent = new Intent(this, MyReservationActivity.class);
-            this.startActivity(intent);
+                Intent intent = new Intent(this, MyReservationActivity.class);
+                this.startActivity(intent);
+                finish();
             }
         } else if (id == R.id.nav_collection) {
 

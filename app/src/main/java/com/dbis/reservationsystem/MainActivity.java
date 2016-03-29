@@ -1,6 +1,7 @@
 package com.dbis.reservationsystem;
 
 
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -64,16 +65,8 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(R.id.nav_home);
         navigationView.setNavigationItemSelectedListener(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
@@ -227,11 +220,12 @@ public class MainActivity extends AppCompatActivity
             if (this != MainActivity.this) {
                 Intent intent = new Intent(this, MainActivity.class);
                 this.startActivity(intent);
+                finish();
             }
-
         } else if (id == R.id.nav_myReservation) {
-                Intent intent = new Intent(this, MyReservationActivity.class);
-                this.startActivity(intent);
+            Intent intent = new Intent(this, MyReservationActivity.class);
+            this.startActivity(intent);
+            finish();
         } else if (id == R.id.nav_collection) {
 
         } else if (id == R.id.nav_theme) {
@@ -242,11 +236,14 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(R.id.nav_home);
         return true;
     }
 
     public void userHandler(View source) {
-
+        Intent intent=new Intent(MainActivity.this,MyReservationActivity.class);
+        startActivity(intent);
     }
 
     public void logout(View source) {
@@ -263,10 +260,6 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    public void clickBt1(View source) {
-        Intent mainToBook =new Intent(MainActivity.this,BookDetailActivity.class);
-        startActivity(mainToBook);
-    }
     public String  testLogin(){
         SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
         String result=sp.getString("login","false");
