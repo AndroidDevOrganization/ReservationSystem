@@ -8,6 +8,7 @@ import java.util.Random;
  * Created by shi12 on 2016/3/12.
  */
 public class MeetingRoom {
+    private int rid;
     private String roomName;
     private int capacity;
     private boolean isNeedConfirm;
@@ -15,6 +16,8 @@ public class MeetingRoom {
     private int endTime;
     private String description;
     private String location;
+    private int confirmTime;
+    private int inAdvanceTime;
     private int authorityId;
     //private String authority;
 
@@ -37,17 +40,20 @@ public class MeetingRoom {
         }
     }
 
-    public MeetingRoom(String roomName, int capacity, boolean isNeedConfirm, int beginTime, int endTime, String description, String location) {
+    public MeetingRoom(int rid, String roomName, int capacity, boolean isNeedConfirm, int beginTime, int endTime, String location, int confirmTime) {
+        this.rid = rid;
         this.roomName = roomName;
         this.capacity = capacity;
         this.isNeedConfirm = isNeedConfirm;
         this.beginTime = beginTime;
         this.endTime = endTime;
-        this.description = description;
         this.location = location;
+        this.confirmTime = confirmTime;
     }
 
-    public MeetingRoom(String roomName, int capacity, boolean isNeedConfirm, int beginTime, int endTime, String description, String location, int authorityId) {
+    public MeetingRoom(int rid, String roomName, int capacity, boolean isNeedConfirm, int beginTime, int endTime, String description,
+                       String location, int confirmTime, int inAdvanceTime, int authorityId) {
+        this.rid = rid;
         this.roomName = roomName;
         this.capacity = capacity;
         this.isNeedConfirm = isNeedConfirm;
@@ -55,7 +61,17 @@ public class MeetingRoom {
         this.endTime = endTime;
         this.description = description;
         this.location = location;
+        this.confirmTime = confirmTime;
+        this.inAdvanceTime = inAdvanceTime;
         this.authorityId = authorityId;
+    }
+
+    public int getRid() {
+        return rid;
+    }
+
+    public void setRid(int rid) {
+        this.rid = rid;
     }
 
     public String getRoomName() {
@@ -129,5 +145,21 @@ public class MeetingRoom {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getConfirmTime() {
+        return confirmTime;
+    }
+
+    public void setConfirmTime(int confirmTime) {
+        this.confirmTime = confirmTime;
+    }
+
+    public int getInAdvanceTime() {
+        return inAdvanceTime;
+    }
+
+    public void setInAdvanceTime(int inAdvanceTime) {
+        this.inAdvanceTime = inAdvanceTime;
     }
 }

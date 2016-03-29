@@ -11,8 +11,7 @@ import java.net.URLConnection;
  * Created by nklyp on 2016/3/13.
  */
 public class PostUtil {
-    public static String sendPost(String url,String params)
-    {
+    public static String sendPost(String url,String params) {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -34,36 +33,29 @@ public class PostUtil {
             in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             line = in.readLine();
-            while (true)
-            {
+            while (true) {
                 result += line;
                 line = in.readLine();
-                if (line != null)
-                {
+                if (line != null) {
                     result += "/n";
                 }
-                else
-                {
+                else {
                     break;
                 }
             }
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             System.out.println("发送post请求出现异常！"+e);
             e.printStackTrace();
         }
         finally {
             try {
-                if (out != null)
-                {
+                if (out != null) {
                     out.close();
                 }
-                if (in != null)
-                {
+                if (in != null) {
                     in.close();
                 }
-            }catch (IOException ex)
-            {
+            }catch (IOException ex) {
                 ex.printStackTrace();
             }
         }

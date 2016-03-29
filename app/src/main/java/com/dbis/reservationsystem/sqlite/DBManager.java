@@ -64,6 +64,7 @@ public class DBManager {
         List<MeetingRoom> mrlist = new ArrayList<MeetingRoom>();
         Cursor c = db.rawQuery("select * from meetingRoomInfo", null);
         while(c.moveToNext()) {
+            int rid = c.getInt(0);
             String room_name = c.getString(1);
             String room_location = c.getString(2);
             int capacity = c.getInt(3);
@@ -75,7 +76,7 @@ public class DBManager {
                 description = "（暂无）";
             int confirm = c.getInt(8);
             boolean isNeedConfirm = (c.getInt(8)!=0);
-            MeetingRoom mr = new MeetingRoom(room_name, capacity, isNeedConfirm, begin_time, end_time, description, room_location, authority_id);
+            MeetingRoom mr = new MeetingRoom(rid, room_name, capacity, isNeedConfirm, begin_time, end_time, room_location, 0);
             mrlist.add(mr);
         }
         for(int i = 0; i < 4; i++)
@@ -90,6 +91,7 @@ public class DBManager {
         List<MyReservation> mrlist = new ArrayList<MyReservation>();
         Cursor c = db.rawQuery("select * from reserveRecord", null);
         while(c.moveToNext()) {
+            int id = c.getInt(0);
             String roomName = c.getString(1);
             String userName = c.getString(2);
             String useBeginTime = c.getString(3);
@@ -100,7 +102,7 @@ public class DBManager {
             if(description == null || description.equals(""))
                 description = "（暂无）";
 
-            MyReservation mr = new MyReservation(roomName, userName, state, description, useBeginTime, userEndTime, bookingTime);
+            MyReservation mr = new MyReservation(id, roomName, userName, state, description, useBeginTime, userEndTime, bookingTime);
             mrlist.add(mr);
         }
         for(int i = 0; i < 4; i++)

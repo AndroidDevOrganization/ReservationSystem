@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by CocoSong on 2016/3/15.
  */
 public class MyReservation {
-
+    private int id;
     private String roomName;
     private String userName;
     private String state;
@@ -15,7 +15,8 @@ public class MyReservation {
     private String useEndTime;
     private String bookingTime;
 
-    public MyReservation(String roomName, String userName, String state, String description, String useBeginTime, String useEndTime, String bookingTime) {
+    public MyReservation(int id, String roomName, String userName, String state, String description, String useBeginTime, String useEndTime, String bookingTime) {
+        this.id = id;
         this.roomName = roomName;
         this.userName = userName;
         this.state = state;
@@ -23,6 +24,14 @@ public class MyReservation {
         this.useBeginTime = useBeginTime;
         this.useEndTime = useEndTime;
         this.bookingTime = bookingTime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRoomName() {

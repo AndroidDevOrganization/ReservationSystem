@@ -30,8 +30,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.Entity.MeetingRoom;
+import com.dbis.reservationsystem.HTTPUtil.PostManager;
+import com.dbis.reservationsystem.HTTPUtil.PostUtil;
 import com.dbis.reservationsystem.sqlite.DBManager;
 import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -50,7 +55,8 @@ public class MainActivity extends AppCompatActivity
 
         // create SQLite DB
         createmyDB();
-        mrlist = new DBManager(this).getMeetingRoomList();
+        //mrlist = new DBManager(this).getMeetingRoomList();
+        mrlist = PostManager.AllMeetingRoom(getApplicationContext());
 
         // for recyclerView of room list
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -69,6 +75,23 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+
+//    public void postMeetingRoom() {
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                String result = PostUtil.sendPost("http://202.113.25.200:8090/api/allmeetingroom", null);
+//                JSONObject jo = null;
+//                try {
+//                    jo = new JSONObject(result);
+//
+//                }catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }
+//    }
 
     // function for goto back
     //2s内按两次退出 3.25 by WuChen

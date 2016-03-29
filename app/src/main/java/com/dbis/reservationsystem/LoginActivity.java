@@ -37,19 +37,16 @@ public class LoginActivity extends Activity {
     private int backValue;
     private String teacherID,teacherName,result;
 
-    private Handler handler = new Handler()
-    {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 0x123)
-            {
+            if (msg.what == 0x123) {
                 String resultInfo=null;
             //   Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                 int rValue = -2;
                     rValue = backValue;
 
-                switch (rValue)
-                {
+                switch (rValue) {
                     case -2:
                         resultInfo = "网络异常，请检查您的网络连接";break;
                     case -1:
@@ -151,19 +148,19 @@ public class LoginActivity extends Activity {
         });
 
     }
-    public void loginSuccessfully()
-    {//保存下登录的信息...似乎记录下password是一个不好的行径....
+
+    public void loginSuccessfully() {//保存下登录的信息...似乎记录下password是一个不好的行径....
         //全局变量暂时没有用到，因为没有需要直接登记的信息
-        Toast.makeText(getApplicationContext(),"登录成功~",Toast.LENGTH_SHORT).show();
-        SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
-        SharedPreferences.Editor ed=sp.edit();
+        Toast.makeText(getApplicationContext(), "登录成功~", Toast.LENGTH_SHORT).show();
+        SharedPreferences sp = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
         String account = txtAccount.getText().toString();
         String password = txtPassword.getText().toString();
-        ed.putString("login","true");
-        ed.putString("account",account);
-        ed.putString("password",password);
-        ed.putString("name",teacherName);
-        ed.putString("id",teacherID);
+        ed.putString("login", "true");
+        ed.putString("account", account);
+        ed.putString("password", password);
+        ed.putString("name", teacherName);
+        ed.putString("id", teacherID);
         ed.commit();
         //注意提交
         Teacher.setAccount(account);
@@ -171,8 +168,8 @@ public class LoginActivity extends Activity {
 
         loginGotoMain();
     }
-    public void loginGotoMain()
-    {
+
+    public void loginGotoMain() {
         Intent loginToMain =new Intent(LoginActivity.this,MainActivity.class);
         startActivity(loginToMain);
         finish();

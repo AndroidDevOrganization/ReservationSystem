@@ -42,12 +42,10 @@ public class TimeTableActivity extends Activity {
     private String endTime;
     private static Calendar dayBegin = Calendar.getInstance();
     private static Calendar dayEnd = Calendar.getInstance();
-    private Handler handler = new Handler()
-    {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 1)
-            {
+            if (msg.what == 1) {
                 Toast.makeText(getApplicationContext(), "获取完毕", Toast.LENGTH_SHORT).show();
                // Toast.makeText(getApplicationContext(), beginTime, Toast.LENGTH_LONG).show();
                 //Toast.makeText(getApplicationContext(), endTime, Toast.LENGTH_LONG).show();

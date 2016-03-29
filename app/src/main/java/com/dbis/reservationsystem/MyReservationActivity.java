@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dbis.reservationsystem.Entity.MeetingRoom;
 import com.dbis.reservationsystem.Entity.MyReservation;
+import com.dbis.reservationsystem.HTTPUtil.PostManager;
 import com.dbis.reservationsystem.sqlite.DBManager;
 import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
 
@@ -43,7 +44,8 @@ public class MyReservationActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mrlist = new DBManager(this).getMyReservationList();
+        mrlist = PostManager.Booking(getApplicationContext());
+        //mrlist = new DBManager(this).getMyReservationList();
 
         // for recyclerView of room list
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -152,9 +154,9 @@ public class MyReservationActivity extends AppCompatActivity
             holder.myres_username.setText(tmpMyResItem.getUserName());
             holder.myres_address.setText(tmpMyResItem.getRoomName());
             holder.myres_description.setText(tmpMyResItem.getDescription());
-            String [] dateAndBeginTime = tmpMyResItem.getUseBeginTime().split(" ");
+            String [] dateAndBeginTime = tmpMyResItem.getUseBeginTime().split("T");
             String [] beginTime = dateAndBeginTime[1].split(":");
-            String [] endTime = tmpMyResItem.getUseEndTime().split(" ")[1].split(":");
+            String [] endTime = tmpMyResItem.getUseEndTime().split("T")[1].split(":");
             holder.myres_meetingTime.setText(dateAndBeginTime[0] + ", " + Integer.parseInt(beginTime[0]) + ":00-" + Integer.parseInt(endTime[0]) + ":00");
             holder.myres_state.setVisibility(View.VISIBLE);
 
