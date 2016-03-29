@@ -3,11 +3,10 @@ package com.dbis.reservationsystem;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,22 +15,20 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ActionMenuView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
-import com.dbis.reservationsystem.Entity.MeetingRoom;
+
 import com.dbis.reservationsystem.Entity.MyReservation;
 import com.dbis.reservationsystem.HTTPUtil.PostManager;
-import com.dbis.reservationsystem.sqlite.DBManager;
-import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -126,6 +123,7 @@ public class MyReservationActivity extends AppCompatActivity
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
+
                 //myres_time = (TextView) view.findViewById(R.id.myres_time);
                 myres_address = (TextView) view.findViewById(R.id.myres_address);
                 myres_username = (TextView) view.findViewById(R.id.myres_username);
@@ -180,9 +178,13 @@ public class MyReservationActivity extends AppCompatActivity
             Date dateNow = new Date();
             String tmpNow = sdf.format(dateNow);
             String tmpBegin = dateAndBeginTime[0] + " " + dateAndBeginTime[1];
-            if(tmpNow.compareTo(tmpBegin) > 0) {
+            if(tmpNow.compareTo(tmpBegin) >= 0) {
+                holder.mView.setBackgroundResource(R.drawable.item_frame_outtime);
+                holder.mView.setPadding(2,2,2,2);
                 holder.mView.setOnClickListener(null);
             }else {
+                holder.mView.setBackgroundResource(R.drawable.item_frame);
+                holder.mView.setPadding(2,2,2,2);
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
