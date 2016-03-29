@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity
             holder.mBundle.putString("from","Main");
             holder.mBundle.putString("room_name", tmpRoomItem.getRoomName());
             holder.mBundle.putString("location", tmpRoomItem.getLocation());
+            holder.mBundle.putInt("inAdvanceTime", tmpRoomItem.getInAdvanceTime());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override

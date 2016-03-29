@@ -179,7 +179,10 @@ public class MyReservationActivity extends AppCompatActivity
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date dateNow = new Date();
             String tmpNow = sdf.format(dateNow);
-            if(tmpNow.compareTo(dateAndBeginTime[0] + " " + dateAndBeginTime[1]) < 0) {
+            String tmpBegin = dateAndBeginTime[0] + " " + dateAndBeginTime[1];
+            if(tmpNow.compareTo(tmpBegin) > 0) {
+                holder.mView.setOnClickListener(null);
+            }else {
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
