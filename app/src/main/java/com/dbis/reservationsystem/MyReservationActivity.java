@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +31,9 @@ import com.dbis.reservationsystem.HTTPUtil.PostManager;
 import com.dbis.reservationsystem.sqlite.DBManager;
 import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MyReservationActivity extends AppCompatActivity
@@ -51,6 +55,8 @@ public class MyReservationActivity extends AppCompatActivity
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(new MyReservationRecyclerViewAdapter(this, mrlist));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
 
         // for navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,9 +164,10 @@ public class MyReservationActivity extends AppCompatActivity
             String [] beginTime = dateAndBeginTime[1].split(":");
             String [] endTime = tmpMyResItem.getUseEndTime().split("T")[1].split(":");
             holder.myres_meetingTime.setText(dateAndBeginTime[0] + ", " + Integer.parseInt(beginTime[0]) + ":00-" + Integer.parseInt(endTime[0]) + ":00");
-            holder.myres_state.setVisibility(View.VISIBLE);
+            holder.myres_state.setText(tmpMyResItem.getState());
 
             // put parameters to transfer
+            holder.mBundle.putInt("id", tmpMyResItem.getId());
             holder.mBundle.putString("from","MyReservation");
             holder.mBundle.putString("room_name", tmpMyResItem.getRoomName());
             holder.mBundle.putString("user_name", tmpMyResItem.getUserName());
@@ -169,17 +176,21 @@ public class MyReservationActivity extends AppCompatActivity
             holder.mBundle.putString("end_time", endTime[0] + ":" + endTime[1]);
             holder.mBundle.putString("description", tmpMyResItem.getDescription());
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, BookDetailActivity.class);
-                    intent.putExtras(holder.mBundle);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dateNow = new Date();
+            String tmpNow = sdf.format(dateNow);
+            if(tmpNow.compareTo(dateAndBeginTime[0] + " " + dateAndBeginTime[1]) < 0) {
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, BookDetailActivity.class);
+                        intent.putExtras(holder.mBundle);
 
-                    context.startActivity(intent);
-                }
-            });
-
+                        context.startActivity(intent);
+                    }
+                });
+            }
         }
 
         @Override
