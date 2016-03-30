@@ -85,36 +85,7 @@ public class LoginActivity extends Activity {
                 new Thread() {
                     @Override
                     public void run() {
-//                        RequestParams rp=new RequestParams();
-//                        HttpUtils hu=new HttpUtils(3000);
-//                        hu.configDefaultHttpCacheExpiry(1);
-//                        //post请求时使用addBodyParameter方法添加参数
-//                        //get请求时使用addQueryStringParameter方法添加参数
-//                        rp.addBodyParameter("userid", txtAccount.getText().toString());
-//                        rp.addBodyParameter("password",txtPassword.getText().toString());
-//                        hu.send(HttpRequest.HttpMethod.POST, "http://202.113.25.200:8090/api/login", rp, new RequestCallBack<String >() {
-//                            @Override
-//                            public void onSuccess(ResponseInfo<String> responseInfo) {
-//                                JSONObject jo = null;
-//                                try {
-//                                    jo = new JSONObject(responseInfo.result);
-//                                    backValue=jo.getInt("returnvalue");
-//                                    if(backValue ==1)
-//                                    {
-//                                        teacherID = jo.getString("id");
-//                                        teacherName = jo.getString("name");
-//                                    }
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//                            }
-//
-//                            @Override
-//                            public void onFailure(HttpException e, String s) {
-//                                Toast.makeText(getApplicationContext(),"网络连接失败，请检查您的网络",Toast.LENGTH_LONG).show();
-//                            }
-//                        });
+
                         String params = "";
                         params += "userid=" + txtAccount.getText().toString().trim();
                         params += "&" + "password=" + txtPassword.getText().toString().trim();
