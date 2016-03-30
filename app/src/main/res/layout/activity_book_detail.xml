@@ -97,8 +97,6 @@
                     android:layout_height="match_parent" />
             </TableRow>
 
-
-
         </TableLayout>
 
         <TableLayout
@@ -200,7 +198,6 @@
                     android:gravity="top"
                     android:background="@drawable/shape"/>
             </TableRow>
-
 
         </TableLayout>
 

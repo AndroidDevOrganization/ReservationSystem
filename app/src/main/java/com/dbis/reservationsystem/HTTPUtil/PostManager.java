@@ -33,7 +33,7 @@ public class PostManager {
             public void handleMessage(Message msg) {
                 if (msg.what == 0) {
                     Toast.makeText(context, "正在加载，请耐心等待……", Toast.LENGTH_SHORT).show();
-                }else if (msg.what == 1) {
+                } else if (msg.what == 1) {
                     Toast.makeText(context, "获取完毕~", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -42,7 +42,7 @@ public class PostManager {
         new Thread() {
             @Override
             public void run() {
-                handler.sendEmptyMessage(0);
+//                handler.sendEmptyMessage(0);
                 url = "allmeetingroom";
                 params = null;
                 String result = PostUtil.sendPost(HOST_URL + url, params);
@@ -67,7 +67,7 @@ public class PostManager {
                         mrlist.add(mRoom);
                         i++;
                     }
-                }catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 handler.sendEmptyMessage(1);
@@ -82,7 +82,7 @@ public class PostManager {
             public void handleMessage(Message msg) {
                 if (msg.what == 0) {
                     Toast.makeText(context, "正在加载，请耐心等待……", Toast.LENGTH_SHORT).show();
-                }else if (msg.what == 1) {
+                } else if (msg.what == 1) {
                     Toast.makeText(context, "获取完毕~", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -91,7 +91,7 @@ public class PostManager {
         new Thread() {
             @Override
             public void run() {
-                handler.sendEmptyMessage(0);
+//                handler.sendEmptyMessage(0);
                 url = "booking";
                 params = "teacherid=" + Teacher.getId();
                 String result = PostUtil.sendPost(HOST_URL + url, params);
@@ -113,7 +113,7 @@ public class PostManager {
                         mrlist.add(mReservation);
                         i++;
                     }
-                }catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 handler.sendEmptyMessage(1);

@@ -1,15 +1,11 @@
 package com.dbis.reservationsystem;
 
-
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -31,20 +27,15 @@ import com.bumptech.glide.Glide;
 import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.Entity.MeetingRoom;
 import com.dbis.reservationsystem.HTTPUtil.PostManager;
-import com.dbis.reservationsystem.HTTPUtil.PostUtil;
-import com.dbis.reservationsystem.sqlite.DBManager;
 import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
     private RecyclerView mRecyclerView;
     private List<MeetingRoom> mrlist;
+    private NavigationView navigationView;
     private long exitTime=0;//按两次退出
 
     @Override
@@ -72,28 +63,11 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setCheckedItem(R.id.nav_home);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
-
-//    public void postMeetingRoom() {
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                String result = PostUtil.sendPost("http://202.113.25.200:8090/api/allmeetingroom", null);
-//                JSONObject jo = null;
-//                try {
-//                    jo = new JSONObject(result);
-//
-//                }catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        }
-//    }
 
     // function for goto back
     //2s内按两次退出 3.25 by WuChen
@@ -227,16 +201,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // create SQLite DB
-    public void createmyDB() {
-        SQLiteDBHelper sdh = new SQLiteDBHelper(getApplicationContext());
-        //must do this ,to produce the database file
-        SQLiteDatabase sdb = sdh.getWritableDatabase();
-
-        sdb.close();
-        sdh.close();
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -268,9 +232,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void userHandler(View source) {
-        Intent intent=new Intent(MainActivity.this,MyReservationActivity.class);
-        startActivity(intent);
+    // create SQLite DB
+    public void createmyDB() {
+        SQLiteDBHelper sdh = new SQLiteDBHelper(getApplicationContext());
+        //must do this ,to produce the database file
+        SQLiteDatabase sdb = sdh.getWritableDatabase();
+
+        sdb.close();
+        sdh.close();
     }
 
     public void logout(View source) {
@@ -287,26 +256,28 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    public String  testLogin(){
-        SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
-        String result=sp.getString("login","false");
-        return result;
-    }
     protected void onResume() {
         super.onResume();
-
-        if(!testLogin().equals("true")){
+        // get information for local resource
+        SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
+        String result=sp.getString("login","false");
+        if(!result.equals("true")){
             Toast.makeText(getApplicationContext(),"请先登录~",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
             //必须结束，否则在未登录情况下会有无法退出的情况
             finish();
         }else {
-            SharedPreferences sp = getSharedPreferences("UserInfo", MODE_PRIVATE);
+            // set static teacher information
             Teacher.setAccount(sp.getString("account", ""));
             Teacher.setPassword(sp.getString("password", ""));
             Teacher.setId(sp.getString("id", ""));
             Teacher.setName(sp.getString("name",""));
+
+            // get header of navigation
+            View headerView = navigationView.getHeaderView(0);
+            TextView nameText = (TextView) headerView.findViewById(R.id.username);
+            nameText.setText(Teacher.getName());
         }
     }
 }

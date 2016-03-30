@@ -38,16 +38,14 @@ public class PostUtil {
                 line = in.readLine();
                 if (line != null) {
                     result += "/n";
-                }
-                else {
+                } else {
                     break;
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("发送post请求出现异常！"+e);
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 if (out != null) {
                     out.close();
@@ -55,7 +53,7 @@ public class PostUtil {
                 if (in != null) {
                     in.close();
                 }
-            }catch (IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }

@@ -14,17 +14,9 @@ import android.widget.Toast;
 
 import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.HTTPUtil.PostUtil;
-import com.google.gson.Gson;
-//import com.lidroid.xutils.HttpUtils;
-//import com.lidroid.xutils.exception.HttpException;
-//import com.lidroid.xutils.http.RequestParams;
-//import com.lidroid.xutils.http.ResponseInfo;
-//import com.lidroid.xutils.http.callback.RequestCallBack;
-//import com.lidroid.xutils.http.client.HttpRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 /**
  * Created by nklyp on 2016/3/9.
@@ -85,7 +77,6 @@ public class LoginActivity extends Activity {
                 new Thread() {
                     @Override
                     public void run() {
-
                         String params = "";
                         params += "userid=" + txtAccount.getText().toString().trim();
                         params += "&" + "password=" + txtPassword.getText().toString().trim();
@@ -93,17 +84,16 @@ public class LoginActivity extends Activity {
                                 "http://202.113.25.200:8090/api/login",
                                 params);
                         JSONObject jo = null;
-                                try {
-                                    jo = new JSONObject(result);
-                                    backValue=jo.getInt("returnvalue");
-                                    if(backValue ==1)
-                                    {
-                                        teacherID = jo.getString("id");
-                                        teacherName = jo.getString("name");
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                        try {
+                            jo = new JSONObject(result);
+                            backValue=jo.getInt("returnvalue");
+                            if(backValue ==1) {
+                                teacherID = jo.getString("id");
+                                teacherName = jo.getString("name");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                         handler.sendEmptyMessage(0x123);
                     }

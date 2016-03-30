@@ -12,14 +12,25 @@ public class TimeTableModel {
 	private String classroom="";
 	private String weeknum="";
 
-	@Override
-	public String toString() {
-		return "TimeTableModel [id=" + id + ", startnum=" + startnum
-				+ ", endnum=" + endnum + ", week=" + week + ", starttime="
-				+ starttime + ", endtime=" + endtime + ", name=" + name
-				+ ", teacher=" + teacher + ", classroom=" + classroom
-				+ ", weeknum=" + weeknum + "]";
-	}
+    public TimeTableModel() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public TimeTableModel(int id, int startnum, int endnum, int week,
+                          String starttime, String endtime, String name, String teacher,
+                          String classroom, String weeknum) {
+        super();
+        this.id = id;
+        this.startnum = startnum;
+        this.endnum = endnum;
+        this.week = week;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.name = name;
+        this.teacher = teacher;
+        this.classroom = classroom;
+        this.weeknum = weeknum;
+    }
 
 	public int getId() {
 		return id;
@@ -100,24 +111,13 @@ public class TimeTableModel {
 	public void setWeeknum(String weeknum) {
 		this.weeknum = weeknum;
 	}
-	public TimeTableModel() {
-		// TODO Auto-generated constructor stub
-	}
 
-	public TimeTableModel(int id, int startnum, int endnum, int week,
-			String starttime, String endtime, String name, String teacher,
-			String classroom, String weeknum) {
-		super();
-		this.id = id;
-		this.startnum = startnum;
-		this.endnum = endnum;
-		this.week = week;
-		this.starttime = starttime;
-		this.endtime = endtime;
-		this.name = name;
-		this.teacher = teacher;
-		this.classroom = classroom;
-		this.weeknum = weeknum;
-	}
+    @Override
+    public String toString() {
+        return "TimeTableModel [id=" + id + ", startnum=" + startnum + ", endnum="
+                + endnum + ", week=" + week + ", starttime=" + starttime + ", endtime="
+                + endtime + ", name=" + name + ", teacher=" + teacher + ", classroom="
+                + classroom + ", weeknum=" + weeknum + "]";
+    }
 
 }

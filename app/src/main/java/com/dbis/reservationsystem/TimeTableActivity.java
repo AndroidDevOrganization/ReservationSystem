@@ -7,26 +7,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.dbis.reservationsystem.Entity.Record;
 import com.dbis.reservationsystem.HTTPUtil.PostUtil;
 import com.dbis.reservationsystem.UI.TimeTableModel;
 import com.dbis.reservationsystem.UI.TimeTableView;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,14 +39,15 @@ public class TimeTableActivity extends Activity {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 Toast.makeText(getApplicationContext(), "获取完毕", Toast.LENGTH_SHORT).show();
-               // Toast.makeText(getApplicationContext(), beginTime, Toast.LENGTH_LONG).show();
-                //Toast.makeText(getApplicationContext(), endTime, Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), beginTime, Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), endTime, Toast.LENGTH_LONG).show();
                 addList();
                 List <String > daytoFill = fillDays();
                 mTimaTableView.startTimeTable(new String[]{daytoFill.get(0), daytoFill.get(1), daytoFill.get(2), daytoFill.get(3), daytoFill.get(4), daytoFill.get(5), daytoFill.get(6)}, mList);
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +72,6 @@ public class TimeTableActivity extends Activity {
                 beginTime = today + " 08:00:00";
                 endTime = todayPlusSeven + " 22:00:00";
 
-
                 String params = "";
                 params += "begintime=" + beginTime;
                 params += "&" + "endTime=" + endTime;
@@ -94,12 +86,9 @@ public class TimeTableActivity extends Activity {
                 handler.sendEmptyMessage(1);
             }
         }.start();
-
-
     }
 
     private void addList() {
-
         for (int i = 0; i < records.length(); i++) {
             JSONObject record = null;
             try {
@@ -122,31 +111,28 @@ public class TimeTableActivity extends Activity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    mList.add(new TimeTableModel(0, fromTimeToIndex(beginTime), fromTimeToIndex(endTime), (int) ((to - from) / (1000 * 60 * 60 * 24)) + 1, "8:20", "10:10", record.getString("teachername"),
+                    mList.add(new TimeTableModel(0, fromTimeToIndex(beginTime), fromTimeToIndex(endTime),
+                            (int) ((to - from) / (1000 * 60 * 60 * 24)) + 1, "8:20", "10:10", record.getString("teachername"),
                             record.getString("teachername"), record.getString("name"), "2-13"));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
         }
 //        mList.add(new TimeTableModel(0, 1, 2, 1, "8:20", "10:10", "张莹",
 //                "张莹", "会议室553", "2-13"));
     }
 
     //注意按钮的叠放次序，相对布局下应该叠放在最上层才有效果
-    public void btnBackToBook(View v)
-    {
+    public void btnBackToBook(View v) {
         //退出时使日期重新回归当日
         dayBegin = Calendar.getInstance();
         dayEnd = Calendar.getInstance();
 
         onBackPressed();
-
     }
-    public void btnWeekPlusSeven(View v)
-    {
+
+    public void btnWeekPlusSeven(View v) {
         dayEnd.add(Calendar.DATE, -6);//先减去6和dayBegin相等，再同时+7
         dayBegin.add(Calendar.DATE,  7);
         dayEnd.add(Calendar.DATE,  7);
@@ -159,8 +145,8 @@ public class TimeTableActivity extends Activity {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
-    public void btnWeekMinusSeven(View v)
-    {
+
+    public void btnWeekMinusSeven(View v) {
         dayEnd.add(Calendar.DATE, -6);//先减去6和dayBegin相等，再同时
         dayBegin.add(Calendar.DATE,  -7);
         dayEnd.add(Calendar.DATE,  -7);
@@ -172,8 +158,8 @@ public class TimeTableActivity extends Activity {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
-    public int fromTimeToIndex(String from)
-    {
+
+    public int fromTimeToIndex(String from) {
         if(from.equals("08:00:00"))
             return 1;
         if(from.equals("09:00:00"))
@@ -207,9 +193,9 @@ public class TimeTableActivity extends Activity {
         else
             return 1;
     }
-    public List <String > fillDays ()
-    {
-        List <String > dayReturn = new ArrayList<String >();
+
+    public List <String> fillDays () {
+        List <String> dayReturn = new ArrayList<String >();
         DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         dayReturn.add(format.format(dayBegin.getTime()).substring(5, 10));
         for ( int i =0;i<6;i++) {

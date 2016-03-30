@@ -122,15 +122,6 @@ public class MeetingRoom implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
-/*
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
-*/
 
     public int getAuthorityId() {
         return authorityId;

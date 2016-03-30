@@ -16,9 +16,7 @@
         android:layout_marginLeft="@dimen/nav_header_vertical_spacing"
         android:layout_marginTop="@dimen/nav_header_vertical_spacing"
         android:scaleType="centerCrop"
-        android:src="@drawable/user_head_3"
-        android:clickable="true"
-        android:onClick="userHandler" />
+        android:src="@drawable/user_head_3" />
 
     <ImageView
         android:id="@+id/logout"
@@ -32,11 +30,12 @@
 
     <TextView
         android:id="@+id/username"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/nav_username_width"
         android:layout_height="wrap_content"
         android:layout_below="@id/userView"
         android:paddingBottom="@dimen/nav_header_vertical_spacing"
         android:layout_alignParentBottom="true"
+        android:textAlignment="center"
         android:gravity="bottom"
         android:text="AndroidStudio"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>

@@ -1,4 +1,5 @@
 package com.dbis.reservationsystem;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -21,15 +22,10 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import com.dbis.reservationsystem.Entity.MeetingRoom;
-import com.dbis.reservationsystem.Entity.MyReservation;
-import com.dbis.reservationsystem.Entity.RecordTime;
 import com.dbis.reservationsystem.Entity.Teacher;
-import com.dbis.reservationsystem.HTTPUtil.PostManager;
 import com.dbis.reservationsystem.HTTPUtil.PostUtil;
-import com.dbis.reservationsystem.sqlite.DBManager;
 
 
 //to fill the adaptor, need String[]
@@ -63,10 +59,9 @@ public class BookDetailActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 Toast.makeText(getApplicationContext(), "正在加载，请耐心等待……", Toast.LENGTH_SHORT).show();
-            }else if (msg.what == 1) {
+            } else if (msg.what == 1) {
                 int insertR = Integer.parseInt(insertResult);
-                switch (insertR)
-                {
+                switch (insertR) {
                     case -1:
                         Toast.makeText(getApplicationContext(), "请检查你的网络状况", Toast.LENGTH_SHORT).show();
                         break;
@@ -102,15 +97,13 @@ public class BookDetailActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "只能提前预约" + inAdvancedTime +"天以内时间", Toast.LENGTH_SHORT).show();
                         break;
                 }
-            }else if(msg.what == 2)
-            {
+            } else if(msg.what == 2) {
                 int deleteR = Integer.parseInt(deleteResult);
-                if (deleteR == 0)
-                {
+                if (deleteR == 0) {
                     Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_SHORT).show();
                     goToMyResActivity();
-                }
-                else Toast.makeText(getApplicationContext(), "删除失败", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getApplicationContext(), "删除失败", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -127,7 +120,7 @@ public class BookDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
 
-       // this.tvRoomName = (TextView)findViewById(R.id.tvRoomName);
+        // this.tvRoomName = (TextView)findViewById(R.id.tvRoomName);
         this.tvRoomLocation = (TextView)findViewById(R.id.tvLocation);
         this.etSupervisor = (EditText) findViewById(R.id.etSupervisor);
         this.etMeetingDate = (EditText) findViewById(R.id.etMeetingDate);
@@ -147,9 +140,7 @@ public class BookDetailActivity extends AppCompatActivity {
             SroomName = bundle.getString("room_name");
             tvRoomLocation.setText(bundle.getString("location"));
             etSupervisor.setText(Teacher.getName());
-        }
-        else if(bundle.getString("from").equals("MyReservation"))
-        {
+        } else if(bundle.getString("from").equals("MyReservation")) {
             fromMain = false;
             BookingId = bundle.getInt("id");
             SroomName = bundle.getString("room_name");
@@ -160,7 +151,8 @@ public class BookDetailActivity extends AppCompatActivity {
             SendTime = bundle.getString("end_time");
             etDescription.setText(bundle.getString("description"));
         }
-// Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
+
+        // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(onMenuItemClick);
@@ -171,7 +163,7 @@ public class BookDetailActivity extends AppCompatActivity {
         nameNum = Teacher.getMrlist().size();
         namesToFill = new String [nameNum];
 
-       for (int i = 0;i < nameNum ;i++)
+        for (int i = 0;i < nameNum ;i++)
             namesToFill[i] = Teacher.getMrlist().get(i).getRoomName();
         spnAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item,namesToFill);
@@ -229,16 +221,14 @@ public class BookDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class RoomNameItemSelectedListener implements AdapterView.OnItemSelectedListener
-    {
-
+    class RoomNameItemSelectedListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             //get the roomName, will also be triggered at first ,do not have to worry about the initializing
             roomNameNow = parent.getItemAtPosition(position).toString();
             String roomLocation = null;
-            for (MeetingRoom mroom:Teacher.getMrlist()){
-                if(mroom.getRoomName().equals(roomNameNow)){
+            for (MeetingRoom mroom:Teacher.getMrlist()) {
+                if(mroom.getRoomName().equals(roomNameNow)) {
                     roomLocation = mroom.getLocation();
                     roomId = mroom.getRid();
                 }
@@ -252,6 +242,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         }
     }
+
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -285,16 +276,14 @@ public class BookDetailActivity extends AppCompatActivity {
                                 handler.sendEmptyMessage(1);
                             }
                         }.start();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "我的预约方法~", Toast.LENGTH_LONG).show();
                     }
                     break;
                 case R.id.Delete:
                     if(fromMain) {
                         break;
-                    }
-                    else{
+                    } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(BookDetailActivity.this);
                         builder.setTitle("删除预约");
                         builder.setMessage("是否确定删除此预约？");
@@ -329,6 +318,7 @@ public class BookDetailActivity extends AppCompatActivity {
             return true;
         }
     };
+
     //在这里对菜单项进行初始化
     //must need this function to inflate menu . Called immediately when created.
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -341,15 +331,15 @@ public class BookDetailActivity extends AppCompatActivity {
             menu.findItem(R.id.Save).setVisible(false);
         return true;
     }
-    public void goToMyResActivity()
-    {
+
+    public void goToMyResActivity() {
         Intent bookToMyReservation =new Intent(BookDetailActivity.this,MyReservationActivity.class);
         startActivity(bookToMyReservation);
         //close this Activity
         finish();
     }
-    public void btnToTimeTable(View v)
-    {
+
+    public void btnToTimeTable(View v) {
         Intent bookToTimeTable =new Intent(BookDetailActivity.this,TimeTableActivity.class);
 
         bookToTimeTable.putExtra("roomName", spnRoomName.getSelectedItem().toString());

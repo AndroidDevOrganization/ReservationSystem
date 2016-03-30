@@ -17,13 +17,15 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/app_main"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".MyReservationActivity"
             android:label="@string/app_myReservation"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".BookDetailActivity"

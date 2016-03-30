@@ -9,7 +9,6 @@ import com.dbis.reservationsystem.Entity.RecordTime;
 import com.dbis.reservationsystem.Entity.MyReservation;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,10 +26,8 @@ public class DBManager {
         db = helper.getReadableDatabase();
         ArrayList<String> roomNames = new ArrayList<String>();
         Cursor c = db.rawQuery("select roomname from meetingRoomInfo",null);
-        while(c.moveToNext())
-        {
-            String roomName =
-            c.getString(0);
+        while(c.moveToNext()) {
+            String roomName = c.getString(0);
             roomNames.add(roomName);
         }
         c.close();
@@ -38,7 +35,7 @@ public class DBManager {
         return roomNames;
     }
 
-    public String  getLocationByName(String roomName) {
+    public String getLocationByName(String roomName) {
         db = helper.getReadableDatabase();
         String roomLocation = null ;
         Cursor c = db.rawQuery("select roomlocation from meetingRoomInfo where roomname = ?",new String[]{roomName});
@@ -111,14 +108,13 @@ public class DBManager {
         db.close();
         return mrlist;
     }
-    public List<RecordTime > getRecordTimebyRoomNameAndDate(String roomName ,String date)
-    {
+
+    public List<RecordTime> getRecordTimebyRoomNameAndDate(String roomName ,String date) {
         db = helper.getReadableDatabase();
         String Qdate = date + "%";
-        ArrayList<RecordTime > recordTimes = new ArrayList<RecordTime>();
+        ArrayList<RecordTime> recordTimes = new ArrayList<RecordTime>();
         Cursor c = db.rawQuery("select useBegin,useEnd from reserveRecord where roomname = ? and useBegin LIKE ?",new String []{roomName,Qdate});
-        while(c.moveToNext())
-        {
+        while(c.moveToNext()) {
             String beginTime = c.getString(0);
             String endTime = c.getString(1);
             RecordTime recordTime = new RecordTime(beginTime,endTime);

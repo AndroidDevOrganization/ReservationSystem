@@ -388,8 +388,7 @@ public class TimeTableView extends LinearLayout {
 	 *         需要设置的横栏名称，需要设置的日程
 	 * @return
 	 */
-	public void startTimeTable(String[] weekname,List<TimeTableModel> mlist)
-	{
+	public void startTimeTable(String[] weekname,List<TimeTableModel> mlist) {
 		setWeekname(weekname);
 		setTimeTable(mlist);
 		//这里之后初始化界面

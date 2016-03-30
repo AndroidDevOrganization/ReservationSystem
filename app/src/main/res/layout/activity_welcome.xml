@@ -9,5 +9,4 @@
     android:background="@drawable/sun"
     tools:context=".WelcomeActivity" >
 
-
 </RelativeLayout>

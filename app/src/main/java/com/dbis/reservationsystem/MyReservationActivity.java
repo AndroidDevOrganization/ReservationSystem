@@ -1,15 +1,10 @@
 package com.dbis.reservationsystem;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,25 +13,17 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.TypedValue;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ActionMenuView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dbis.reservationsystem.Entity.MyReservation;
 import com.dbis.reservationsystem.HTTPUtil.PostManager;
-import com.dbis.reservationsystem.sqlite.DBManager;
-import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +32,7 @@ public class MyReservationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
     private RecyclerView mRecyclerView;
     private List<MyReservation> mrlist;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +50,6 @@ public class MyReservationActivity extends AppCompatActivity
         mRecyclerView.setAdapter(new MyReservationRecyclerViewAdapter(this, mrlist));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
         // for navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,10 +57,23 @@ public class MyReservationActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setCheckedItem(R.id.nav_myReservation);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // get username from local resource
+        SharedPreferences sp = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        String username = sp.getString("name", "AndroidStudio");
+        // get header of navigation
+        View headerView = navigationView.getHeaderView(0);
+        TextView nameText = (TextView) headerView.findViewById(R.id.username);
+        nameText.setText(username);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        finish();
     }
 
     // function for goto back
@@ -112,18 +112,6 @@ public class MyReservationActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
-//    private GestureDetector.OnGestureListener onGestureListener =
-//            new GestureDetector.SimpleOnGestureListener() {
-//                @Override
-//                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//                    float x = e2.getX() - e1.getX();
-//                    float y = e2.getY() - e1.getY();
-//                    if(x < 0 && y < 10) {
-//                        deleteItem();
-//                    }
-//                }
-//            }
 
     public static class MyReservationRecyclerViewAdapter
             extends RecyclerView.Adapter<MyReservationRecyclerViewAdapter.ViewHolder> {
@@ -184,7 +172,6 @@ public class MyReservationActivity extends AppCompatActivity
             holder.myres_meetingTime.setText(dateAndBeginTime[0] + ", " + Integer.parseInt(beginTime[0]) + ":00-" + Integer.parseInt(endTime[0]) + ":00");
             holder.myres_state.setText(tmpMyResItem.getState());
 
-
             // put parameters to transfer
             holder.mBundle.putInt("id", tmpMyResItem.getId());
             holder.mBundle.putString("from","MyReservation");
@@ -203,7 +190,7 @@ public class MyReservationActivity extends AppCompatActivity
                 holder.mView.setBackgroundResource(R.drawable.item_frame_outtime);
                 holder.mView.setPadding(2,2,2,2);
                 holder.mView.setOnClickListener(null);
-            }else {
+            } else {
                 holder.mView.setBackgroundResource(R.drawable.item_frame);
                 holder.mView.setPadding(2,2,2,2);
                 holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -255,10 +242,6 @@ public class MyReservationActivity extends AppCompatActivity
         return true;
     }
 
-    public void userHandler(View source) {
-
-    }
-
     public void logout(View source) {
         SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
         SharedPreferences.Editor ed=sp.edit();
@@ -273,8 +256,4 @@ public class MyReservationActivity extends AppCompatActivity
         finish();
     }
 
-    public void clickBt1(View source) {
-        Intent mainToBook =new Intent(MyReservationActivity.this,BookDetailActivity.class);
-        startActivity(mainToBook);
-    }
 }

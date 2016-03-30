@@ -10,6 +10,7 @@
     <dimen name="nav_userView_width">80dp</dimen>
     <dimen name="nav_userView_height">96dp</dimen>
     <dimen name="nav_icon_size">40dp</dimen>
+    <dimen name="nav_username_width">116dp</dimen>
 
     <!--list dimens for meeting room and book-->
     <dimen name="item_margin">10dp</dimen>
