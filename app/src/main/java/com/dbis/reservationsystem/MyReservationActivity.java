@@ -71,9 +71,10 @@ public class MyReservationActivity extends AppCompatActivity
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        finish();
+    public void onRestart() {
+        super.onRestart();
+        mrlist = PostManager.Booking(getApplicationContext());
+        mRecyclerView.setAdapter(new MyReservationRecyclerViewAdapter(this, mrlist));
     }
 
     // function for goto back
