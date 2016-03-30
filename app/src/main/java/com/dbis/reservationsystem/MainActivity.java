@@ -38,6 +38,7 @@ import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         createmyDB();
         //mrlist = new DBManager(this).getMeetingRoomList();
         mrlist = PostManager.AllMeetingRoom(getApplicationContext());
+        Teacher.setMrlist(mrlist);
 
         // for recyclerView of room list
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);

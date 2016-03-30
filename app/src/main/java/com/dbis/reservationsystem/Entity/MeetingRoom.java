@@ -2,12 +2,13 @@ package com.dbis.reservationsystem.Entity;
 
 import com.dbis.reservationsystem.R;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Created by shi12 on 2016/3/12.
  */
-public class MeetingRoom {
+public class MeetingRoom implements Serializable{
     private int rid;
     private String roomName;
     private int capacity;

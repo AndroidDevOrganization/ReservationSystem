@@ -51,7 +51,7 @@
                     android:textSize="16sp"/>
 
                 <Spinner
-                    android:id="@+id/spSex"
+                    android:id="@+id/spRoomNames"
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/txt_style"

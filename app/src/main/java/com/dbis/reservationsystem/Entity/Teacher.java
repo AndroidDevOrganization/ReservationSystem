@@ -1,5 +1,7 @@
 package com.dbis.reservationsystem.Entity;
 
+import java.util.List;
+
 /**
  * Created by waho on 2016/3/25.
  * 用于在各个activity之间传递信息
@@ -9,6 +11,15 @@ public class Teacher {
     public static String password;
     public static String name;
     public static String id;
+    public static List<MeetingRoom> mrlist;
+
+    public static List<MeetingRoom> getMrlist() {
+        return mrlist;
+    }
+
+    public static void setMrlist(List<MeetingRoom> mrlist) {
+        Teacher.mrlist = mrlist;
+    }
 
     public static String getAccount() {
         return account;
