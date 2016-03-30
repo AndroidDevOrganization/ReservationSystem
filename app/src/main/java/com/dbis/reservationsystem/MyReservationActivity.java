@@ -184,6 +184,7 @@ public class MyReservationActivity extends AppCompatActivity
             holder.myres_meetingTime.setText(dateAndBeginTime[0] + ", " + Integer.parseInt(beginTime[0]) + ":00-" + Integer.parseInt(endTime[0]) + ":00");
             holder.myres_state.setText(tmpMyResItem.getState());
 
+
             // put parameters to transfer
             holder.mBundle.putInt("id", tmpMyResItem.getId());
             holder.mBundle.putString("from","MyReservation");
