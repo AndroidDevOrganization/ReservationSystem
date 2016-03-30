@@ -3,6 +3,7 @@ package com.dbis.reservationsystem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,6 +107,18 @@ public class MyReservationActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+//    private GestureDetector.OnGestureListener onGestureListener =
+//            new GestureDetector.SimpleOnGestureListener() {
+//                @Override
+//                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+//                    float x = e2.getX() - e1.getX();
+//                    float y = e2.getY() - e1.getY();
+//                    if(x < 0 && y < 10) {
+//                        deleteItem();
+//                    }
+//                }
+//            }
 
     public static class MyReservationRecyclerViewAdapter
             extends RecyclerView.Adapter<MyReservationRecyclerViewAdapter.ViewHolder> {
@@ -196,6 +211,7 @@ public class MyReservationActivity extends AppCompatActivity
                     }
                 });
             }
+//            holder.mView.set
         }
 
         @Override
@@ -238,7 +254,17 @@ public class MyReservationActivity extends AppCompatActivity
     }
 
     public void logout(View source) {
-
+        SharedPreferences sp=getSharedPreferences("UserInfo",MODE_PRIVATE);
+        SharedPreferences.Editor ed=sp.edit();
+        ed.putString("login","false");
+        ed.putString("account","");
+        ed.putString("password","");
+        ed.putString("id","");
+        ed.putString("name","");
+        ed.commit();
+        Intent intent=new Intent(MyReservationActivity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void clickBt1(View source) {
