@@ -3,7 +3,8 @@ package com.dbis.reservationsystem;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,18 +17,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ActionMenuView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
-import com.dbis.reservationsystem.Entity.MeetingRoom;
+
 import com.dbis.reservationsystem.Entity.MyReservation;
-import com.dbis.reservationsystem.Entity.Teacher;
 import com.dbis.reservationsystem.HTTPUtil.PostManager;
 import com.dbis.reservationsystem.sqlite.DBManager;
 import com.dbis.reservationsystem.sqlite.SQLiteDBHelper;
@@ -48,7 +49,6 @@ public class MyReservationActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         mrlist = PostManager.Booking(getApplicationContext());
         //mrlist = new DBManager(this).getMyReservationList();
@@ -128,6 +128,7 @@ public class MyReservationActivity extends AppCompatActivity
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
+
                 //myres_time = (TextView) view.findViewById(R.id.myres_time);
                 myres_address = (TextView) view.findViewById(R.id.myres_address);
                 myres_username = (TextView) view.findViewById(R.id.myres_username);
@@ -168,19 +169,11 @@ public class MyReservationActivity extends AppCompatActivity
             holder.myres_meetingTime.setText(dateAndBeginTime[0] + ", " + Integer.parseInt(beginTime[0]) + ":00-" + Integer.parseInt(endTime[0]) + ":00");
             holder.myres_state.setText(tmpMyResItem.getState());
 
-            String location = null;
-            for (MeetingRoom mroom:Teacher.getMrlist()){
-                if(mroom.getRoomName().equals(tmpMyResItem.getRoomName())){
-                    location = mroom.getLocation();
-                }
-            }
-
             // put parameters to transfer
             holder.mBundle.putInt("id", tmpMyResItem.getId());
             holder.mBundle.putString("from","MyReservation");
             holder.mBundle.putString("room_name", tmpMyResItem.getRoomName());
             holder.mBundle.putString("user_name", tmpMyResItem.getUserName());
-            holder.mBundle.putString("location",location);
             holder.mBundle.putString("date", dateAndBeginTime[0]);
             holder.mBundle.putString("begin_time", beginTime[0] + ":" + beginTime[1]);
             holder.mBundle.putString("end_time", endTime[0] + ":" + endTime[1]);
@@ -190,9 +183,13 @@ public class MyReservationActivity extends AppCompatActivity
             Date dateNow = new Date();
             String tmpNow = sdf.format(dateNow);
             String tmpBegin = dateAndBeginTime[0] + " " + dateAndBeginTime[1];
-            if(tmpNow.compareTo(tmpBegin) > 0) {
+            if(tmpNow.compareTo(tmpBegin) >= 0) {
+                holder.mView.setBackgroundResource(R.drawable.item_frame_outtime);
+                holder.mView.setPadding(2,2,2,2);
                 holder.mView.setOnClickListener(null);
             }else {
+                holder.mView.setBackgroundResource(R.drawable.item_frame);
+                holder.mView.setPadding(2,2,2,2);
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
