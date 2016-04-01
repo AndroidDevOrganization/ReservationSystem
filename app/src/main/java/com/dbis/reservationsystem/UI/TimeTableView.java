@@ -48,7 +48,7 @@ public class TimeTableView extends LinearLayout {
 	/**
 	 * 单个View 的高度 需要转换成dp
 	 */
-	private final static int TimeTableHeight = 50;
+	private final static int TimeTableHeight = 40;
 	/**
 	 * 线View高度 或者宽度
 	 */
