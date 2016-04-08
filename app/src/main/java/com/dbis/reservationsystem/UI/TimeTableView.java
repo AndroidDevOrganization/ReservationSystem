@@ -180,7 +180,7 @@ public class TimeTableView extends LinearLayout {
 								/ WEEKNUM);
 				mWeekName.setHeight(dip2px(TimeTableWeekNameHeight));
 				mWeekName.setGravity(Gravity.CENTER);
-				mWeekName.setTextSize(16);
+				mWeekName.setTextSize(13);//改变首行的字体大小
 				mWeekName.setText(weekname[i - 1]);
 //				//设置背景色为透明，去掉边框
 				mWeekName.setBackgroundColor(new Color().alpha(0));

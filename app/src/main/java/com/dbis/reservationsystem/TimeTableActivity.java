@@ -193,16 +193,51 @@ public class TimeTableActivity extends Activity {
         else
             return 1;
     }
+    //计算好要填充到首行的字符串列表
 
     public List <String> fillDays () {
         List <String> dayReturn = new ArrayList<String >();
         DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-        dayReturn.add(format.format(dayBegin.getTime()).substring(5, 10));
+        dayReturn.add(format.format(dayBegin.getTime()).substring(5, 10) + "\n" + getWeekDay(dayBegin));
         for ( int i =0;i<6;i++) {
             dayBegin.add(Calendar.DATE, 1);
-            dayReturn.add(format.format(dayBegin.getTime()).substring(5,10));
+            dayReturn.add(format.format(dayBegin.getTime()).substring(5,10) + "\n" + getWeekDay(dayBegin));
         }
         dayBegin.add(Calendar.DATE, -6);
         return dayReturn;
     }
+
+    // 返回星期几
+    //@param : Calendar
+    // @return : String 星期几
+    private String getWeekDay (Calendar c) {
+        String res = null;
+        switch (c.get(Calendar.DAY_OF_WEEK)) {
+            case Calendar.MONDAY:
+                res = "星期一";
+                break;
+            case Calendar.TUESDAY:
+                res = "星期二";
+                break;
+            case Calendar.WEDNESDAY:
+                res = "星期三";
+                break;
+            case Calendar.THURSDAY:
+                res = "星期四";
+                break;
+            case Calendar.FRIDAY:
+                res = "星期五";
+                break;
+            case Calendar.SATURDAY:
+                res = "星期六";
+                break;
+            case Calendar.SUNDAY:
+                res = "星期天";
+                break;
+            default:
+                break;
+        }
+        return res;
+    }
+
 }
