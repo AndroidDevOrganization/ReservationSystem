@@ -4,7 +4,7 @@ develop reservation system for Android
 
 ## Branch Management
 1. Branches:
-	* remote branch: `origin/master` and `origin/Dev` (origin is the name of github server).
+	* remote branch: `origin/master` and `origin/Dev` (origin is the name of github server).  
 		*master branch for release version*  
 		*branch for develop version*
 	* local branch: `master`, `Dev`, `YourNameDev`.  
