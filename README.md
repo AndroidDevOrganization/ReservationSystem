@@ -7,7 +7,7 @@ develop reservation system for Android
 	* remote branch: `origin/master` and `origin/Dev` (origin is the name of github server).
 		*master branch for release version*  
 		*branch for develop version*
-	* local branch: `master`, `Dev`, `YourNameDev`. 
+	* local branch: `master`, `Dev`, `YourNameDev`.  
 		*`master` - `origin/master`*  
 		*`Dev` - `origin/Dev`*  
 		*`YourNameDev` for your own develop*
